@@ -1,1 +1,1 @@
-# heap-hop-plugin
+# heap-hop-plugin for IntelliJ IDEA
