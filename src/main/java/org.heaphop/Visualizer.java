@@ -57,6 +57,22 @@ public interface Visualizer {
             }
             return String.format("%s[]{%s}",dataType.getName(),valuesToString);
         }
+        if (Iterable.class.isAssignableFrom(value.getClass())) {
+            String type = "?";
+            for (Object item : Iterable.class.cast(value)) {
+                if(item != null) type = item.getClass().getSimpleName();
+                if(!"?".equals(type)) break;
+            }
+            return String.format("%s<%s>%s",value.getClass().getSimpleName(), type,value);
+        }
+        if (Map.class.isAssignableFrom(value.getClass())) {
+            String type = "?";
+            for (Object pair : Iterable.class.cast(((Map<?, ?>) value).entrySet())) {
+                if(pair != null) type = Map.Entry.class.cast(pair).getKey().getClass().getSimpleName() + "," + Map.Entry.class.cast(pair).getValue().getClass().getSimpleName();
+                if(!"?".equals(type)) break;
+            }
+            return String.format("%s<%s>%s}",value.getClass().getSimpleName(), type,value);
+        }
         return value.toString();
     }
 }
