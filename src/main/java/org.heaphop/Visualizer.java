@@ -41,25 +41,25 @@ public interface Visualizer {
                     Map.entry("fromField", currentElement.getValue2())
             ));
         }
-        System.out.println(dataToBeShared.toString());
+        System.out.println(dataToBeShared);
     }
 
     default String extractValueStringEncoding(Object value){
         if (value == null) return "null";
         if (value.getClass().isArray()){
-            Class dataType = value.getClass().getComponentType();
-            String valuesToString = "";
+            Class<?> dataType = value.getClass().getComponentType();
+            StringBuilder valuesToString = new StringBuilder();
             int length = Array.getLength(value);
             for (int i = 0; i < length; i++) {
                 Object element = Array.get(value,i);
-                valuesToString+= (element == null ? "null" : element.toString());
-                if(i < length-1) valuesToString+=',';
+                valuesToString.append(element == null ? "null" : element.toString());
+                if(i < length-1) valuesToString.append(',');
             }
-            return String.format("%s[]{%s}",dataType.getName(),valuesToString);
+            return String.format("%s[]{%s}",dataType.getName(), valuesToString);
         }
         if (Iterable.class.isAssignableFrom(value.getClass())) {
             String type = "?";
-            for (Object item : Iterable.class.cast(value)) {
+            for (Object item : (Iterable) value) {
                 if(item != null) type = item.getClass().getSimpleName();
                 if(!"?".equals(type)) break;
             }
@@ -67,8 +67,8 @@ public interface Visualizer {
         }
         if (Map.class.isAssignableFrom(value.getClass())) {
             String type = "?";
-            for (Object pair : Iterable.class.cast(((Map<?, ?>) value).entrySet())) {
-                if(pair != null) type = Map.Entry.class.cast(pair).getKey().getClass().getSimpleName() + "," + Map.Entry.class.cast(pair).getValue().getClass().getSimpleName();
+            for (Object pair : ((Map<?, ?>) value).entrySet()) {
+                if(pair != null) type = ((Map.Entry) pair).getKey().getClass().getSimpleName() + "," + ((Map.Entry) pair).getValue().getClass().getSimpleName();
                 if(!"?".equals(type)) break;
             }
             return String.format("%s<%s>%s}",value.getClass().getSimpleName(), type,value);
