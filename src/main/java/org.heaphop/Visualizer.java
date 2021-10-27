@@ -1,11 +1,10 @@
 package org.heaphop;
 
-import kotlin.annotation.Target;
 import org.javatuples.Triplet;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.lang.annotation.ElementType;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public interface Visualizer {
@@ -18,22 +17,18 @@ public interface Visualizer {
             Triplet<Visualizer, Integer, String> currentElement = queue.poll();
             Visualizer currentVisualizer = currentElement.getValue0();
             for (var field : currentVisualizer.getClass().getDeclaredFields()) {
-                boolean isAccessible = field.canAccess(currentVisualizer);
+                boolean wasAccessible = field.canAccess(currentVisualizer);
                 field.setAccessible(true);
                 Object value = null;
                 String fieldName = "";
                 try {
                     value = field.get(currentVisualizer);
                     fieldName = field.getName();
-                    if (value == null) {
-                        fields.put(fieldName, "null");
-                    } else {
-                        fields.put(fieldName, value.toString());
-                    }
+                    fields.put(fieldName,extractValueStringEncoding(value));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
-                field.setAccessible(isAccessible);
+                field.setAccessible(wasAccessible);
                 if (Visualizer.class.isAssignableFrom(field.getType())) {
                     if (value != null) {
                         queue.add(new Triplet<>((Visualizer) value, dataToBeShared.size(), fieldName));
@@ -47,5 +42,21 @@ public interface Visualizer {
             ));
         }
         System.out.println(dataToBeShared.toString());
+    }
+
+    default String extractValueStringEncoding(Object value){
+        if (value == null) return "null";
+        if (value.getClass().isArray()){
+            Class dataType = value.getClass().getComponentType();
+            String valuesToString = "";
+            int length = Array.getLength(value);
+            for (int i = 0; i < length; i++) {
+                Object element = Array.get(value,i);
+                valuesToString+= (element == null ? "null" : element.toString());
+                if(i < length-1) valuesToString+=',';
+            }
+            return String.format("%s[]{%s}",dataType.getName(),valuesToString);
+        }
+        return value.toString();
     }
 }
