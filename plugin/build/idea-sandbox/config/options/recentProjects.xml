@@ -1,0 +1,22 @@
+<application>
+  <component name="RecentProjectsManager">
+    <option name="additionalInfo">
+      <map>
+        <entry key="$USER_HOME$/IdeaProjects/testPlugin">
+          <value>
+            <RecentProjectMetaInfo frameTitle="testPlugin – Main.java" opened="true" projectWorkspaceId="20397tW0AcDzjDpqjMPV4Durmmf">
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="build" value="IC-213.5281.15" />
+              <option name="buildTimestamp" value="1634803559941" />
+              <option name="eap" value="true" />
+              <frame x="85" y="25" width="1750" height="993" />
+              <option name="productionCode" value="IC" />
+              <option name="projectOpenTimestamp" value="1635262241061" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="lastProjectLocation" value="$USER_HOME$/IdeaProjects" />
+  </component>
+</application>

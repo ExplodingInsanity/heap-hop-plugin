@@ -1,0 +1,25 @@
+<idea-plugin>
+  <idea-version since-build="213.5281" until-build="213.*" />
+  <id>org.example.pluginTryout</id>
+  <name>Cel Mai Plugoff</name>
+  <version>2020.3.2</version>
+  <vendor email="support@mycompany.com" url="http://www.mycompany.com">MyCompany</vendor>
+  <description><![CDATA[Super descriere.<br>
+    <em>poti bune tag-uri HTML baiatu</em>]]></description>
+  <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+  <!--    <depends>com.intellij.modules.platform</depends>-->
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+  <module value="org.heaphop.Visualizer" />
+  <!--    <extensionPoints>-->
+  <!--        <extensionPoint name="Visualizer" interface="org.heaphop.Visualizer"/>-->
+  <!--    </extensionPoints>-->
+  <actions>
+    <group id="HeapHop.SayHello" text="SayHello" description="This says hello">
+      <add-to-group group-id="MainMenu" anchor="last" />
+      <action class="org.heaphop.HelloAction" id="HeapHop.Actions.HelloAction" text="Say Hello" />
+    </group>
+  </actions>
+</idea-plugin>
