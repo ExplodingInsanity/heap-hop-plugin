@@ -24,7 +24,7 @@ public interface Visualizer {
                 try {
                     value = field.get(currentVisualizer);
                     fieldName = field.getName();
-                    fields.put(fieldName,extractValueStringEncoding(value));
+                    fields.put(fieldName, extractValueStringEncoding(value));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -44,35 +44,48 @@ public interface Visualizer {
         System.out.println(dataToBeShared);
     }
 
-    default String extractValueStringEncoding(Object value){
-        if (value == null) return "null";
-        if (value.getClass().isArray()){
-            Class<?> dataType = value.getClass().getComponentType();
-            StringBuilder valuesToString = new StringBuilder();
+    default JSONObject extractValueStringEncoding(Object value) {
+        if (value == null) return new JSONObject();
+        JSONObject jsonObject = new JSONObject();
+        if (value.getClass().isArray()) {
+            JSONArray array = new JSONArray();
+            jsonObject.put("type", "list");
             int length = Array.getLength(value);
             for (int i = 0; i < length; i++) {
-                Object element = Array.get(value,i);
-                valuesToString.append(element == null ? "null" : element.toString());
-                if(i < length-1) valuesToString.append(',');
+                Object element = Array.get(value, i);
+                array.add(extractValueStringEncoding(element));
             }
-            return String.format("%s[]{%s}",dataType.getName(), valuesToString);
+            jsonObject.put("value", array);
+            return jsonObject;
         }
         if (Iterable.class.isAssignableFrom(value.getClass())) {
-            String type = "?";
+            JSONArray array = new JSONArray();
             for (Object item : (Iterable) value) {
-                if(item != null) type = item.getClass().getSimpleName();
-                if(!"?".equals(type)) break;
+                array.add(extractValueStringEncoding(item));
             }
-            return String.format("%s<%s>%s",value.getClass().getSimpleName(), type,value);
+            jsonObject.put("type", "list");
+            jsonObject.put("value", array);
+            return jsonObject;
         }
         if (Map.class.isAssignableFrom(value.getClass())) {
-            String type = "?";
+            JSONArray array = new JSONArray();
             for (Object pair : ((Map<?, ?>) value).entrySet()) {
-                if(pair != null) type = ((Map.Entry) pair).getKey().getClass().getSimpleName() + "," + ((Map.Entry) pair).getValue().getClass().getSimpleName();
-                if(!"?".equals(type)) break;
+                JSONObject keyValuePair = new JSONObject();
+                keyValuePair.put("key", extractValueStringEncoding(((Map.Entry) pair).getKey()));
+                keyValuePair.put("value", extractValueStringEncoding(((Map.Entry) pair).getValue()));
+                array.add(keyValuePair);
             }
-            return String.format("%s<%s>%s}",value.getClass().getSimpleName(), type,value);
+            jsonObject.put("type", "dictionary");
+            jsonObject.put("value", array);
+            return jsonObject;
         }
-        return value.toString();
+        if (Visualizer.class.isAssignableFrom(value.getClass())) {
+            jsonObject.put("type", "visualizer");
+            jsonObject.put("value", value);
+            return jsonObject;
+        }
+        jsonObject.put("type", "atom");
+        jsonObject.put("value", value);
+        return jsonObject;
     }
 }
