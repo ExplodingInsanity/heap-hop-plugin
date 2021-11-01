@@ -43,7 +43,8 @@ public class DrawingServer {
 
     private static void startServer(String pathToServer) {
         try {
-            process = Runtime.getRuntime().exec(String.format("cmd /c %s", pathToServer));
+            // TODO: check if the command to run nodejs is node
+            process = Runtime.getRuntime().exec(String.format("cmd /c node %s", pathToServer));
         } catch (IOException e) {
             e.printStackTrace();
         }

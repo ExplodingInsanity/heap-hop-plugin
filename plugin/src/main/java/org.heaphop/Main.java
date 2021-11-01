@@ -5,17 +5,20 @@ import org.json.simple.JSONObject;
 public class Main {
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
+        ll.value = 1;
         ll.ll = new LinkedList();
-        ll.ll.value = new int[]{1,2,3};
-        JSONObject fields = ll.getState();
-
-        DrawingServer drawingServer = new DrawingServer("localhost:24567", "test.bat");
+        lll.ll.value = 2;
+        ll.ll.ll = new LinkedList();
+        ll.ll.ll.value = 3;
+        ll.getState();
+        // TODO: change the file path from test.js to something else
+        DrawingServer drawingServer = new DrawingServer("localhost:24567", "test.js");
         drawingServer.sendPostRequest("/query", fields);
-//        drawingServer.stopServer();
+        drawingServer.stopServer();
     }
 
     static class LinkedList implements Visualizer {
-        int[] value;
+        int value;
         LinkedList ll;
     }
 }
