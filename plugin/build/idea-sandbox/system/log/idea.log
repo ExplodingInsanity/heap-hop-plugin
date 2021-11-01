@@ -951,3 +951,288 @@ Caused by: java.lang.ClassNotFoundException: fleet.rpc.client.FleetWebSocketTran
 2021-10-26 18:30:50,711 [  50758]   INFO - erver.followMe.FollowMeManager - Unregister user 0:'Mihai' with ClientId=ClientId(value=Host) 
 2021-10-26 18:30:50,749 [  50796]   INFO -        #com.intellij.idea.Main - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------ 
 2021-10-26 18:30:50,752 [  50799]   INFO - org.jetbrains.io.BuiltInServer - web server stopped 
+2021-11-01 21:07:23,996 [      0]   INFO -        #com.intellij.idea.Main - ------------------------------------------------------ IDE STARTED ------------------------------------------------------ 
+2021-11-01 21:07:24,070 [     74]   INFO -        #com.intellij.idea.Main - IDE: IntelliJ IDEA (build #IC-213.5449.25, 27 Oct 2021 18:28) 
+2021-11-01 21:07:24,073 [     77]   INFO -        #com.intellij.idea.Main - OS: Windows 10 (10.0, amd64) 
+2021-11-01 21:07:24,079 [     83]   INFO -        #com.intellij.idea.Main - JRE: 11.0.12+7-b1751.11 (JetBrains s.r.o.) 
+2021-11-01 21:07:24,080 [     84]   INFO -        #com.intellij.idea.Main - JVM: 11.0.12+7-b1751.11 (OpenJDK 64-Bit Server VM) 
+2021-11-01 21:07:24,150 [    154]   INFO -        #com.intellij.idea.Main - JVM options: [-Didea.auto.reload.plugins=true, -Didea.classpath.index.enabled=false, -Didea.config.path=C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\config, -Didea.is.internal=true, -Didea.platform.prefix=Idea, -Didea.plugins.path=C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\plugins, -Didea.required.plugins.id=org.example.pluginTryout, -Didea.system.path=C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\system, -Xms256m, -Xmx512m, -Dfile.encoding=windows-1252, -Duser.country=US, -Duser.language=en, -Duser.variant, -ea] 
+2021-11-01 21:07:24,151 [    155]   INFO -        #com.intellij.idea.Main - args: [traverseUI, C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\searchableOptions, true] 
+2021-11-01 21:07:24,151 [    155]   INFO -        #com.intellij.idea.Main - library path: C:\Users\radu_\.gradle\caches\modules-2\files-2.1\com.jetbrains\jbre\jbr_jcef-11_0_12-windows-x64-b1751.11\extracted\jbr\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Java\jdk-16.0.1\bin;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\nodejs\;C:\Program Files (x86)\dotnet\;C:\Program Files\PuTTY\;C:\Users\radu_\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2021.1.3\bin;;C:\Program Files\JetBrains\PyCharm 2021.2.1\bin;;C:\Users\radu_\.dotnet\tools;C:\Program Files (x86)\flutter\bin;C:\Users\radu_\AppData\Roaming\npm;C:\Users\radu_\AppData\Local\Programs\Microsoft VS Code\bin;. 
+2021-11-01 21:07:24,151 [    155]   INFO -        #com.intellij.idea.Main - boot library path: C:\Users\radu_\.gradle\caches\modules-2\files-2.1\com.jetbrains\jbre\jbr_jcef-11_0_12-windows-x64-b1751.11\extracted\jbr\bin 
+2021-11-01 21:07:24,171 [    175]   INFO -        #com.intellij.idea.Main - locale=en_US JNU=Cp1252 file.encoding=windows-1252
+  idea.config.path=C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\config
+  idea.system.path=C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\system
+  idea.plugins.path=C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\plugins
+  idea.log.path=C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\system/log 
+2021-11-01 21:07:24,182 [    186]   INFO -        #com.intellij.idea.Main - CPU cores: 8; ForkJoinPool.commonPool: java.util.concurrent.ForkJoinPool@3d54ea37[Running, parallelism = 8, size = 7, active = 4, running = 4, steals = 2, tasks = 0, submissions = 0]; factory: com.intellij.concurrency.IdeaForkJoinWorkerThreadFactory@14396aa9 
+2021-11-01 21:07:24,275 [    279]   INFO - llij.ide.plugins.PluginManager - Plugin PluginDescriptor(name=Groovy, id=org.intellij.groovy, descriptorPath=plugin.xml, path=~\.gradle\caches\modules-2\files-2.1\com.jetbrains.intellij.idea\ideaIC\LATEST-EAP-SNAPSHOT\583c54f6c019c98c45b0c4f48e4892c228a3f213\ideaIC-LATEST-EAP-SNAPSHOT\plugins\Groovy, version=213.5449.25, package=org.jetbrains.plugins.groovy, isBundled=true) misses optional descriptor duplicates-groovy.xml 
+2021-11-01 21:07:24,275 [    279]   INFO - llij.ide.plugins.PluginManager - Plugin PluginDescriptor(name=Groovy, id=org.intellij.groovy, descriptorPath=plugin.xml, path=~\.gradle\caches\modules-2\files-2.1\com.jetbrains.intellij.idea\ideaIC\LATEST-EAP-SNAPSHOT\583c54f6c019c98c45b0c4f48e4892c228a3f213\ideaIC-LATEST-EAP-SNAPSHOT\plugins\Groovy, version=213.5449.25, package=org.jetbrains.plugins.groovy, isBundled=true) misses optional descriptor duplicates-detection-groovy.xml 
+2021-11-01 21:07:24,335 [    339]   INFO - om.intellij.ui.scale.JBUIScale - System scale factor: 1.0 (IDE-managed HiDPI) 
+2021-11-01 21:07:24,343 [    347]   INFO -        #com.intellij.idea.Main - JNA library (64-bit) loaded in 160 ms 
+2021-11-01 21:07:24,384 [    388]   INFO - penapi.util.io.win32.IdeaWin32 - Native filesystem for Windows is operational 
+2021-11-01 21:07:24,780 [    784]   INFO - e.plugins.DisabledPluginsState - Plugins to enable: [com.jetbrains.codeWithMe] 
+2021-11-01 21:07:24,828 [    832]   INFO - llij.ide.plugins.PluginManager - Module intellij.space.index is not enabled because dependency intellij.indexing.shared is not available 
+2021-11-01 21:07:24,842 [    846]   INFO - llij.ide.plugins.PluginManager - Loaded bundled plugins: IDEA CORE (213.5449.25), IDE Features Trainer (213.5449.25), Grazie (213.5449.25), Settings Repository (213.5449.25), YAML (213.5449.25), WSL File System Support (213.5449.25), TextMate Bundles (213.5449.25), Terminal (213.5449.25), Emoji Picker (213.5449.25), JetBrains maven model api classes (213.5449.25), JetBrains Repository Search (213.5449.25), Qodana (213.5449.25), EditorConfig (213.5449.25), WebP Support (213.5449.25), Mercurial (213.5449.25), Shell Script (213.5449.25), Projector Libraries for Code With Me and Remote Development (213.5449.25), JetBrains Marketplace Licensing Support (213.5449.25), Windows 10 Light Theme (213.5449.25), macOS Light Theme (213.5449.25), Dependency Management Api for External Build Tools (213.5449.25), Copyright (213.5449.25), Properties (213.5449.25), Gradle (213.5449.25), Images (213.5449.25), Java (213.5449.25), JavaFX (213.5449.25), Kotlin (213-1.5.10-release-949-IJ5449.25), Java Bytecode Decompiler (213.5449.25), Eclipse Interoperability (213.5449.25), Java Stream Debugger (213.5449.25), Package Search (213.5449.25), Code With Me (213.5449.25), com.intellij.tracing.ide (213.5449.25), Machine Learning Local Models (213.5449.25), Java IDE Customization (213.5449.25), Java Internationalization (213.5449.25), UI Designer (213.5449.25), Configuration Script (213.5449.25), Shared Indexes (213.5449.25), Machine Learning Code Completion (213.5449.25), Completion Stats Collector (213.5449.25), Machine Learning Code Completion Models (213.5449.25), Smali Support (213.5449.25), XPathView + XSLT (213.5449.25), IntelliLang (213.5449.25), Markdown (213.5449.25), Task Management (213.5449.25), XSLT Debugger (213.5449.25), TestNG (213.5449.25), Subversion (213.5449.25), Perforce Helix Core (213.5449.25), Lombok (213.5449.25), JUnit (213.5449.25), GitHub (213.5449.25), Space (213.5449.25), Git (213.5449.25), IDE Features Trainer: Git Lessons (213.5449.25), ChangeReminder (213.5449.25), Machine Learning in Search Everywhere (213.5449.25), Code Coverage for Java (213.5449.25), Bytecode Viewer (213.5449.25), Groovy (213.5449.25), Ant (213.5449.25), Maven (213.5449.25), Gradle-Java (213.5449.25), Gradle-Maven (213.5449.25), Gradle DSL API (213.5449.25), Gradle Dependency Updater Implementation (213.5449.25), Android (2020.3.1 Final.213.5449.25), Plugin DevKit (213.5449.25) 
+2021-11-01 21:07:24,842 [    846]   INFO - llij.ide.plugins.PluginManager - Loaded custom plugins: Cel Mai Plugoff (2020.3.2) 
+2021-11-01 21:07:25,446 [   1450]   INFO - intellij.util.io.FilePageCache - lower=100; upper=492; buffer=10; max=492 
+2021-11-01 21:07:25,498 [   1502]   WARN - j.internal.DebugAttachDetector - Unable to start DebugAttachDetector, please add `--add-exports java.base/jdk.internal.vm=ALL-UNNAMED` to VM options 
+2021-11-01 21:07:25,562 [   1566]   INFO - til.net.ssl.CertificateManager - Default SSL context initialized 
+2021-11-01 21:07:25,598 [   1602]   INFO - ication.options.PathMacrosImpl - Loaded path macros: {MAVEN_REPOSITORY=C:\Users\Mihai\.m2\repository, KOTLIN_BUNDLED=C:\Users\radu_\.gradle\caches\modules-2\files-2.1\com.jetbrains.intellij.idea\ideaIC\LATEST-EAP-SNAPSHOT\583c54f6c019c98c45b0c4f48e4892c228a3f213\ideaIC-LATEST-EAP-SNAPSHOT\plugins\Kotlin\kotlinc} 
+2021-11-01 21:07:25,611 [   1615]   INFO - rains.ide.BuiltInServerManager - built-in server started, port 63343 
+2021-11-01 21:07:25,621 [   1625]   INFO - lij.diagnostic.DebugLogManager - Set TRACE for the following categories: #com.jetbrains.rdserver.requests, #com.jetbrains.rd.ide.document, #com.jetbrains.rdserver.document, #com.jetbrains.rdserver.editors, #com.jetbrains.rdserver.actions, #com.jetbrains.rdserver.permissions 
+2021-11-01 21:07:25,776 [   1780]   INFO -                         STDOUT - Starting searchable options index builder 
+2021-11-01 21:07:25,899 [   1903]   WARN - l.NotificationGroupManagerImpl - Notification group CodeWithMe is already registered (group=com.intellij.notification.NotificationGroup@7b507a85). Plugin descriptor: PluginDescriptor(name=Code With Me, id=com.jetbrains.codeWithMe, descriptorPath=plugin.xml, path=~\.gradle\caches\modules-2\files-2.1\com.jetbrains.intellij.idea\ideaIC\LATEST-EAP-SNAPSHOT\583c54f6c019c98c45b0c4f48e4892c228a3f213\ideaIC-LATEST-EAP-SNAPSHOT\plugins\cwm-plugin, version=213.5449.25, package=null, isBundled=true) 
+2021-11-01 21:07:25,935 [   1939]   INFO - penapi.application.Experiments - Experimental features enabled for user: wsl.p9.support, wsl.prefer.p9.support, wsl.p9.show.roots.in.file.chooser, wsl.execute.with.wsl.exe, linux.native.menu, recent.and.edited.files.together, show.create.new.element.in.popup, search.everywhere.mixed.results, editor.reader.mode, new.large.text.file.viewer, wsl.fsd.content.loader, terminal.shell.command.handling 
+2021-11-01 21:07:26,445 [   2449]   INFO - impl.SharedIndexMainZipStorage - Shared Indexes Storage is opened and empty 
+2021-11-01 21:07:26,721 [   2725]   INFO - lors.impl.AppEditorFontOptions - Font setting migration: JetBrains Mono -> [JetBrains Mono, Regular, Bold] 
+2021-11-01 21:07:27,082 [   3086]   INFO - tellij.wsl.fs.WslContentLoader - fsd server found and will be used for WSL content loading 
+2021-11-01 21:07:27,101 [   3105]   INFO - pl.local.NativeFileWatcherImpl - Native file watcher is disabled 
+2021-11-01 21:07:27,117 [   3121]   INFO - pi.vfs.impl.wsl.WslFileWatcher - WSL file watcher: C:\Users\radu_\.gradle\caches\modules-2\files-2.1\com.jetbrains.intellij.idea\ideaIC\LATEST-EAP-SNAPSHOT\583c54f6c019c98c45b0c4f48e4892c228a3f213\ideaIC-LATEST-EAP-SNAPSHOT\bin\fsnotifier-wsl 
+2021-11-01 21:07:28,048 [   4052]   INFO - lors.impl.AppEditorFontOptions - Font setting migration: JetBrains Mono -> [JetBrains Mono, Regular, Bold] 
+2021-11-01 21:07:28,772 [   4776]   INFO - gs.CompletionMLRankingSettings - ML Completion enabled, experiment group=11 for: Kotlin 
+2021-11-01 21:07:31,483 [   7487]  ERROR - j.util.io.ResizeableMappedFile - storage size = 4096, file size = 4096 
+java.nio.file.NoSuchFileException: C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\system\index\shared_indexes\shared.index.hashes.org.jetbrains.kotlin.idea.vfilefinder.KotlinClassFileIndex\shared.index.hashes.org.jetbrains.kotlin.idea.vfilefinder.KotlinClassFileIndex_inputs.len
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:239)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:371)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:422)
+	at java.base/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:420)
+	at java.base/java.nio.file.Files.newInputStream(Files.java:156)
+	at com.intellij.util.io.ResizeableMappedFile.readLength(ResizeableMappedFile.java:193)
+	at com.intellij.util.io.ResizeableMappedFile.<init>(ResizeableMappedFile.java:69)
+	at com.intellij.util.io.PersistentBTreeEnumerator.<init>(PersistentBTreeEnumerator.java:93)
+	at com.intellij.util.io.PersistentEnumerator.createDefaultEnumerator(PersistentEnumerator.java:66)
+	at com.intellij.util.io.PersistentMapImpl.<init>(PersistentMapImpl.java:136)
+	at com.intellij.util.io.PersistentMapBuilder.buildImplementation(PersistentMapBuilder.java:62)
+	at com.intellij.util.io.PersistentMapBuilder.build(PersistentMapBuilder.java:44)
+	at com.intellij.util.indexing.impl.forward.PersistentMapBasedForwardIndex.createMap(PersistentMapBasedForwardIndex.java:82)
+	at com.intellij.util.indexing.impl.forward.PersistentMapBasedForwardIndex.<init>(PersistentMapBasedForwardIndex.java:27)
+	at com.intellij.util.indexing.impl.forward.PersistentMapBasedForwardIndex.<init>(PersistentMapBasedForwardIndex.java:20)
+	at com.intellij.indexing.shared.platform.impl.FileContentHashIndex$1.openForwardIndex(FileContentHashIndex.java:165)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapReduceIndex.lambda$new$1(VfsAwareMapReduceIndex.java:76)
+	at com.intellij.util.indexing.impl.MapReduceIndex.<init>(MapReduceIndex.java:76)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapReduceIndex.<init>(VfsAwareMapReduceIndex.java:88)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapReduceIndex.<init>(VfsAwareMapReduceIndex.java:74)
+	at com.intellij.indexing.shared.platform.impl.FileContentHashIndex.<init>(FileContentHashIndex.java:39)
+	at com.intellij.indexing.shared.platform.impl.FileContentHashIndex.createFileContentHashIndex(FileContentHashIndex.java:136)
+	at com.intellij.indexing.shared.platform.impl.CompositeInvertedIndex.<init>(CompositeInvertedIndex.java:42)
+	at com.intellij.indexing.shared.platform.impl.SharedIndexInfrastructure.combineIndex(SharedIndexInfrastructure.java:40)
+	at com.intellij.util.indexing.FileBasedIndexImpl.initIndexStorage(FileBasedIndexImpl.java:513)
+	at com.intellij.util.indexing.FileBasedIndexImpl.registerIndexer(FileBasedIndexImpl.java:470)
+	at com.intellij.util.indexing.FileBasedIndexDataInitialization.lambda$initAssociatedDataForExtensions$0(FileBasedIndexDataInitialization.java:79)
+	at com.intellij.util.indexing.IndexDataInitializer.executeTask(IndexDataInitializer.kt:76)
+	at com.intellij.util.indexing.IndexDataInitializer.access$executeTask(IndexDataInitializer.kt:15)
+	at com.intellij.util.indexing.IndexDataInitializer$runParallelTasks$1$1.run(IndexDataInitializer.kt:50)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at com.intellij.util.concurrency.BoundedTaskExecutor.doRun(BoundedTaskExecutor.java:246)
+	at com.intellij.util.concurrency.BoundedTaskExecutor.access$200(BoundedTaskExecutor.java:32)
+	at com.intellij.util.concurrency.BoundedTaskExecutor$1.execute(BoundedTaskExecutor.java:225)
+	at com.intellij.util.ConcurrencyUtil.runUnderThreadName(ConcurrencyUtil.java:213)
+	at com.intellij.util.concurrency.BoundedTaskExecutor$1.run(BoundedTaskExecutor.java:214)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1$1.run(Executors.java:668)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1$1.run(Executors.java:665)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1.run(Executors.java:665)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2021-11-01 21:07:31,486 [   7490]  ERROR - j.util.io.ResizeableMappedFile - IntelliJ IDEA 2021.3 EAP  Build #IC-213.5449.25 
+2021-11-01 21:07:31,486 [   7490]  ERROR - j.util.io.ResizeableMappedFile - JDK: 11.0.12; VM: OpenJDK 64-Bit Server VM; Vendor: JetBrains s.r.o. 
+2021-11-01 21:07:31,486 [   7490]  ERROR - j.util.io.ResizeableMappedFile - OS: Windows 10 
+2021-11-01 21:07:31,491 [   7495]  ERROR - j.util.io.ResizeableMappedFile - Last Action:  
+2021-11-01 21:07:31,669 [   7673]   INFO - users.CodeWithMeSystemSettings - Looking for lobbyServerUrl in registry, is32Bit=false 
+2021-11-01 21:07:31,673 [   7677]   INFO - users.CodeWithMeSystemSettings - Searching for HKLM_64\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl in registry 
+2021-11-01 21:07:31,686 [   7690]   INFO - users.CodeWithMeSystemSettings - registry entry not found at HKLM_64\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl 
+2021-11-01 21:07:31,686 [   7690]   INFO - users.CodeWithMeSystemSettings - Searching for HKLM_32\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl in registry 
+2021-11-01 21:07:31,687 [   7691]   INFO - users.CodeWithMeSystemSettings - registry entry not found at HKLM_32\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl 
+2021-11-01 21:07:31,687 [   7691]   INFO - users.CodeWithMeSystemSettings - Searching for HKCU_64\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl in registry 
+2021-11-01 21:07:31,687 [   7691]   INFO - users.CodeWithMeSystemSettings - registry entry not found at HKCU_64\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl 
+2021-11-01 21:07:31,687 [   7691]   INFO - users.CodeWithMeSystemSettings - Searching for HKCU_32\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl in registry 
+2021-11-01 21:07:31,687 [   7691]   INFO - users.CodeWithMeSystemSettings - registry entry not found at HKCU_32\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl 
+2021-11-01 21:07:31,691 [   7695]   INFO - users.CodeWithMeSystemSettings - Looking for lobbyServerUrl in registry, is32Bit=false 
+2021-11-01 21:07:31,691 [   7695]   INFO - users.CodeWithMeSystemSettings - Searching for HKLM_64\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl in registry 
+2021-11-01 21:07:31,692 [   7696]   INFO - users.CodeWithMeSystemSettings - registry entry not found at HKLM_64\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl 
+2021-11-01 21:07:31,692 [   7696]   INFO - users.CodeWithMeSystemSettings - Searching for HKLM_32\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl in registry 
+2021-11-01 21:07:31,692 [   7696]   INFO - users.CodeWithMeSystemSettings - registry entry not found at HKLM_32\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl 
+2021-11-01 21:07:31,692 [   7696]   INFO - users.CodeWithMeSystemSettings - Searching for HKCU_64\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl in registry 
+2021-11-01 21:07:31,692 [   7696]   INFO - users.CodeWithMeSystemSettings - registry entry not found at HKCU_64\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl 
+2021-11-01 21:07:31,692 [   7696]   INFO - users.CodeWithMeSystemSettings - Searching for HKCU_32\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl in registry 
+2021-11-01 21:07:31,692 [   7696]   INFO - users.CodeWithMeSystemSettings - registry entry not found at HKCU_32\SOFTWARE\JetBrains\CodeWithMe\lobbyServerUrl 
+2021-11-01 21:07:32,357 [   8361]   INFO - leBasedIndexDataInitialization - Index data initialization done: 6583 ms. Initialized indexes: [FilenameIndex, FrameworkDetectionIndex, TodoIndex, IdIndex, filetypes, Stubs, Trigram.Index, fileIncludes, DomFileIndex, RelaxSymbolIndex, XmlTagNames, XmlNamespaces, html5.custom.attributes.index, SchemaTypeInheritance, json.file.root.values, yaml.keys.name, editorconfig.index.name, xmlProperties, bytecodeAnalysis, java.auto.module.name, java.source.module.name, java.null.method.argument, java.fun.expression, java.binary.plus.expression, JavaFxControllerClassIndex, javafx.id.name, javafx.custom.component, org.jetbrains.kotlin.idea.versions.KotlinJvmMetadataVersionIndex, org.jetbrains.kotlin.idea.versions.KotlinJsMetadataVersionIndex, org.jetbrains.kotlin.idea.vfilefinder.KotlinClassFileIndex, org.jetbrains.kotlin.idea.vfilefinder.KotlinJavaScriptMetaFileIndex, org.jetbrains.kotlin.idea.vfilefinder.KotlinMetadataFileIndex, org.jetbrains.kotlin.idea.vfilefinder.KotlinMetadataFilePackageIndex, org.jetbrains.kotlin.idea.vfilefinder.KotlinModuleMappingIndex, org.jetbrains.kotlin.idea.vfilefinder.KotlinPackageSourcesMemberNamesIndex, org.jetbrains.kotlin.idea.vfilefinder.KotlinJvmModuleAnnotationsIndex, org.jetbrains.kotlin.idea.vfilefinder.KotlinBuiltInsMetadataIndex, org.jetbrains.kotlin.idea.vfilefinder.KotlinStdlibIndex, org.jetbrains.kotlin.idea.vfilefinder.KlibMetaFileIndex, com.intellij.uiDesigner.FormClassIndex, XsltSymbolIndex, groovy.trait.fields, groovy.trait.methods, LombokConfigIndex, ant-imports, com.android.tools.idea.model.AndroidManifestIndex$Companion$NAME$1.NAME, BindingXmlIndex, MlModelFileIndex, NavXmlIndex, IdeaPluginRegistrationIndex, PluginIdModuleIndex, PluginIdDependenciesIndex, devkit.ExtensionPointIndex, devkit.ExtensionPointClassIndex]. 
+2021-11-01 21:07:32,661 [   8665]  ERROR - j.util.io.ResizeableMappedFile - storage size = 4096, file size = 4096 
+java.nio.file.NoSuchFileException: C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\system\index\stubs\org.jetbrains.kotlin.idea.stubindex.kotlinprobablycontractedfunctionshortnameindex\org.jetbrains.kotlin.idea.stubindex.KotlinProbablyContractedFunctionShortNameIndex.storage.len
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:239)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:371)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:422)
+	at java.base/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:420)
+	at java.base/java.nio.file.Files.newInputStream(Files.java:156)
+	at com.intellij.util.io.ResizeableMappedFile.readLength(ResizeableMappedFile.java:193)
+	at com.intellij.util.io.ResizeableMappedFile.<init>(ResizeableMappedFile.java:69)
+	at com.intellij.util.io.PersistentBTreeEnumerator.<init>(PersistentBTreeEnumerator.java:93)
+	at com.intellij.util.io.PersistentEnumerator.createDefaultEnumerator(PersistentEnumerator.java:66)
+	at com.intellij.util.io.PersistentMapImpl.<init>(PersistentMapImpl.java:136)
+	at com.intellij.util.indexing.impl.MapIndexStorage.createPersistentMap(MapIndexStorage.java:125)
+	at com.intellij.util.indexing.impl.MapIndexStorage.createValueContainerMap(MapIndexStorage.java:138)
+	at com.intellij.util.indexing.impl.MapIndexStorage.initMapAndCache(MapIndexStorage.java:74)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapIndexStorage.initMapAndCache(VfsAwareMapIndexStorage.java:63)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapIndexStorage.<init>(VfsAwareMapIndexStorage.java:58)
+	at com.intellij.psi.stubs.StubIndexImpl$StubIndexStorageLayout.openIndexStorage(StubIndexImpl.java:717)
+	at com.intellij.util.indexing.impl.storage.TransientFileContentIndex$1.openIndexStorage(TransientFileContentIndex.java:42)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapReduceIndex.lambda$new$0(VfsAwareMapReduceIndex.java:75)
+	at com.intellij.util.indexing.impl.MapReduceIndex.<init>(MapReduceIndex.java:74)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapReduceIndex.<init>(VfsAwareMapReduceIndex.java:88)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapReduceIndex.<init>(VfsAwareMapReduceIndex.java:74)
+	at com.intellij.util.indexing.impl.storage.TransientFileContentIndex.<init>(TransientFileContentIndex.java:38)
+	at com.intellij.psi.stubs.StubIndexImpl.registerIndexer(StubIndexImpl.java:224)
+	at com.intellij.psi.stubs.StubIndexImpl$StubIndexInitialization.lambda$prepareTasks$1(StubIndexImpl.java:773)
+	at com.intellij.util.indexing.IndexDataInitializer.executeTask(IndexDataInitializer.kt:76)
+	at com.intellij.util.indexing.IndexDataInitializer.access$executeTask(IndexDataInitializer.kt:15)
+	at com.intellij.util.indexing.IndexDataInitializer$runParallelTasks$1$1.run(IndexDataInitializer.kt:50)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at com.intellij.util.concurrency.BoundedTaskExecutor.doRun(BoundedTaskExecutor.java:246)
+	at com.intellij.util.concurrency.BoundedTaskExecutor.access$200(BoundedTaskExecutor.java:32)
+	at com.intellij.util.concurrency.BoundedTaskExecutor$1.execute(BoundedTaskExecutor.java:225)
+	at com.intellij.util.ConcurrencyUtil.runUnderThreadName(ConcurrencyUtil.java:213)
+	at com.intellij.util.concurrency.BoundedTaskExecutor$1.run(BoundedTaskExecutor.java:214)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1$1.run(Executors.java:668)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1$1.run(Executors.java:665)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1.run(Executors.java:665)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2021-11-01 21:07:32,662 [   8666]  ERROR - j.util.io.ResizeableMappedFile - IntelliJ IDEA 2021.3 EAP  Build #IC-213.5449.25 
+2021-11-01 21:07:32,662 [   8666]  ERROR - j.util.io.ResizeableMappedFile - JDK: 11.0.12; VM: OpenJDK 64-Bit Server VM; Vendor: JetBrains s.r.o. 
+2021-11-01 21:07:32,662 [   8666]  ERROR - j.util.io.ResizeableMappedFile - OS: Windows 10 
+2021-11-01 21:07:32,662 [   8666]  ERROR - j.util.io.ResizeableMappedFile - Last Action:  
+2021-11-01 21:07:32,735 [   8739]  ERROR - j.util.io.ResizeableMappedFile - storage size = 4096, file size = 4096 
+java.nio.file.NoSuchFileException: C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\system\index\stubs\org.jetbrains.kotlin.idea.stubindex.kotlinoverridableinternalmembersshortnameindex\org.jetbrains.kotlin.idea.stubindex.KotlinOverridableInternalMembersShortNameIndex.storage.len
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:239)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:371)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:422)
+	at java.base/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:420)
+	at java.base/java.nio.file.Files.newInputStream(Files.java:156)
+	at com.intellij.util.io.ResizeableMappedFile.readLength(ResizeableMappedFile.java:193)
+	at com.intellij.util.io.ResizeableMappedFile.<init>(ResizeableMappedFile.java:69)
+	at com.intellij.util.io.PersistentBTreeEnumerator.<init>(PersistentBTreeEnumerator.java:93)
+	at com.intellij.util.io.PersistentEnumerator.createDefaultEnumerator(PersistentEnumerator.java:66)
+	at com.intellij.util.io.PersistentMapImpl.<init>(PersistentMapImpl.java:136)
+	at com.intellij.util.indexing.impl.MapIndexStorage.createPersistentMap(MapIndexStorage.java:125)
+	at com.intellij.util.indexing.impl.MapIndexStorage.createValueContainerMap(MapIndexStorage.java:138)
+	at com.intellij.util.indexing.impl.MapIndexStorage.initMapAndCache(MapIndexStorage.java:74)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapIndexStorage.initMapAndCache(VfsAwareMapIndexStorage.java:63)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapIndexStorage.<init>(VfsAwareMapIndexStorage.java:58)
+	at com.intellij.psi.stubs.StubIndexImpl$StubIndexStorageLayout.openIndexStorage(StubIndexImpl.java:717)
+	at com.intellij.util.indexing.impl.storage.TransientFileContentIndex$1.openIndexStorage(TransientFileContentIndex.java:42)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapReduceIndex.lambda$new$0(VfsAwareMapReduceIndex.java:75)
+	at com.intellij.util.indexing.impl.MapReduceIndex.<init>(MapReduceIndex.java:74)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapReduceIndex.<init>(VfsAwareMapReduceIndex.java:88)
+	at com.intellij.util.indexing.impl.storage.VfsAwareMapReduceIndex.<init>(VfsAwareMapReduceIndex.java:74)
+	at com.intellij.util.indexing.impl.storage.TransientFileContentIndex.<init>(TransientFileContentIndex.java:38)
+	at com.intellij.psi.stubs.StubIndexImpl.registerIndexer(StubIndexImpl.java:224)
+	at com.intellij.psi.stubs.StubIndexImpl$StubIndexInitialization.lambda$prepareTasks$1(StubIndexImpl.java:773)
+	at com.intellij.util.indexing.IndexDataInitializer.executeTask(IndexDataInitializer.kt:76)
+	at com.intellij.util.indexing.IndexDataInitializer.access$executeTask(IndexDataInitializer.kt:15)
+	at com.intellij.util.indexing.IndexDataInitializer$runParallelTasks$1$1.run(IndexDataInitializer.kt:50)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at com.intellij.util.concurrency.BoundedTaskExecutor.doRun(BoundedTaskExecutor.java:246)
+	at com.intellij.util.concurrency.BoundedTaskExecutor.access$200(BoundedTaskExecutor.java:32)
+	at com.intellij.util.concurrency.BoundedTaskExecutor$1.execute(BoundedTaskExecutor.java:225)
+	at com.intellij.util.ConcurrencyUtil.runUnderThreadName(ConcurrencyUtil.java:213)
+	at com.intellij.util.concurrency.BoundedTaskExecutor$1.run(BoundedTaskExecutor.java:214)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1$1.run(Executors.java:668)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1$1.run(Executors.java:665)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1.run(Executors.java:665)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2021-11-01 21:07:32,735 [   8739]  ERROR - j.util.io.ResizeableMappedFile - IntelliJ IDEA 2021.3 EAP  Build #IC-213.5449.25 
+2021-11-01 21:07:32,735 [   8739]  ERROR - j.util.io.ResizeableMappedFile - JDK: 11.0.12; VM: OpenJDK 64-Bit Server VM; Vendor: JetBrains s.r.o. 
+2021-11-01 21:07:32,735 [   8739]  ERROR - j.util.io.ResizeableMappedFile - OS: Windows 10 
+2021-11-01 21:07:32,738 [   8742]  ERROR - j.util.io.ResizeableMappedFile - Last Action:  
+2021-11-01 21:07:32,830 [   8834]   INFO - exImpl$StubIndexInitialization - Index data initialization done: 472 ms. Initialized stub indexes: {kotlin.primeIndexKey, org.jetbrains.kotlin.idea.stubindex.KotlinSubclassObjectNameIndex, jvm.static.member.type, dom.namespaceKey, org.jetbrains.kotlin.idea.stubindex.KotlinTopLevelPropertyFqnNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinTopLevelTypeAliasFqNameIndex, gr.class.super, org.jetbrains.kotlin.idea.stubindex.KotlinClassShortNameIndex, gr.annot.members, org.jetbrains.kotlin.idea.stubindex.KotlinTopLevelTypeAliasByPackageIndex, java.anonymous.baseref, dom.elementClass, jvm.static.member.name, properties.index, java.method.parameter.types, java.class.extlist, org.jetbrains.kotlin.idea.stubindex.KotlinFunctionShortNameIndex, java.class.fqn, org.jetbrains.kotlin.idea.stubindex.KotlinAnnotationsIndex, java.module.name, gr.method.name, gr.field.name, gr.script.fqn, org.jetbrains.kotlin.idea.stubindex.KotlinTypeAliasShortNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinPropertyShortNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinExactPackagesIndex, java.annotations, java.class.shortname, org.jetbrains.kotlin.idea.stubindex.KotlinTopLevelFunctionByPackageIndex, org.jetbrains.kotlin.idea.stubindex.KotlinTopLevelClassByPackageIndex, java.field.name, java.method.name, gr.anonymous.class, org.jetbrains.kotlin.idea.stubindex.KotlinTopLevelPropertyByPackageIndex, gr.annot.method.name, org.jetbrains.kotlin.idea.stubindex.KotlinFullClassNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinTypeAliasByExpansionShortNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinSuperClassIndex, org.jetbrains.kotlin.idea.stubindex.KotlinTopLevelExtensionsByReceiverTypeIndex, markdown.header, gr.class.fqn, org.jetbrains.kotlin.idea.stubindex.KotlinTopLevelFunctionFqnNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinProbablyNothingPropertyShortNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinProbablyNothingFunctionShortNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinProbablyContractedFunctionShortNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinJvmNameAnnotationIndex, org.jetbrains.kotlin.idea.stubindex.KotlinExtensionsInObjectsByReceiverTypeIndex, org.jetbrains.kotlin.idea.stubindex.KotlinOverridableInternalMembersShortNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinScriptFqnIndex, org.jetbrains.kotlin.idea.stubindex.KotlinFileFacadeFqNameIndex, org.jetbrains.kotlin.idea.stubindex.KotlinFilePartClassIndex, org.jetbrains.kotlin.idea.stubindex.KotlinFileFacadeClassByPackageIndex, org.jetbrains.kotlin.idea.stubindex.KotlinMultifileClassPartIndex, org.jetbrains.kotlin.idea.stubindex.KotlinFileFacadeShortNameIndex, gr.script.class}. 
+2021-11-01 21:07:36,953 [  12957]   WARN - #com.intellij.ui.jcef.JBCefApp - JCEF is manually disabled in headless env via 'ide.browser.jcef.headless.enabled=false' 
+2021-11-01 21:07:37,095 [  13099]   INFO - CompilerWorkspaceConfiguration - Available processors: 8 
+2021-11-01 21:07:37,251 [  13255]   INFO -                         STDOUT - Found 213 configurables 
+2021-11-01 21:07:38,741 [  14745]  ERROR - nSystem.impl.ActionManagerImpl - Cannot load class org.heaphop.HelloAction (
+  error: org/heaphop/HelloAction has been compiled by a more recent version of the Java Runtime (class file version 60.0), this version of the Java Runtime only recognizes class file versions up to 55.0,
+  classLoader=PluginClassLoader(plugin=PluginDescriptor(name=Cel Mai Plugoff, id=org.example.pluginTryout, descriptorPath=plugin.xml, path=~\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\plugins\plugin, version=2020.3.2, package=null, isBundled=false), packagePrefix=null, instanceId=47, state=active)
+) 
+com.intellij.diagnostic.PluginException: Cannot load class org.heaphop.HelloAction (
+  error: org/heaphop/HelloAction has been compiled by a more recent version of the Java Runtime (class file version 60.0), this version of the Java Runtime only recognizes class file versions up to 55.0,
+  classLoader=PluginClassLoader(plugin=PluginDescriptor(name=Cel Mai Plugoff, id=org.example.pluginTryout, descriptorPath=plugin.xml, path=~\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\plugins\plugin, version=2020.3.2, package=null, isBundled=false), packagePrefix=null, instanceId=47, state=active)
+)
+	at com.intellij.ide.plugins.cl.PluginClassLoader.loadClassInsideSelf(PluginClassLoader.java:407)
+	at com.intellij.ide.plugins.cl.PluginClassLoader.tryLoadingClass(PluginClassLoader.java:256)
+	at com.intellij.serviceContainer.ComponentManagerImplKt.doLoadClass(ComponentManagerImpl.kt:1443)
+	at com.intellij.serviceContainer.ComponentManagerImplKt.access$doLoadClass(ComponentManagerImpl.kt:1)
+	at com.intellij.serviceContainer.ComponentManagerImpl.instantiateClass(ComponentManagerImpl.kt:886)
+	at com.intellij.openapi.actionSystem.impl.ActionManagerImpl.instantiate(ActionManagerImpl.java:204)
+	at com.intellij.openapi.actionSystem.impl.ActionManagerImpl.convertStub(ActionManagerImpl.java:189)
+	at com.intellij.openapi.actionSystem.impl.ActionManagerImpl.getActionImpl(ActionManagerImpl.java:507)
+	at com.intellij.openapi.actionSystem.impl.ActionManagerImpl.getAction(ActionManagerImpl.java:496)
+	at com.intellij.ide.ui.search.TraverseUIStarter.processKeymap(TraverseUIStarter.java:273)
+	at com.intellij.ide.ui.search.TraverseUIStarter.startup(TraverseUIStarter.java:134)
+	at com.intellij.ide.ui.search.TraverseUIStarter.main(TraverseUIStarter.java:90)
+	at com.intellij.idea.ApplicationLoader$startApp$3.run(ApplicationLoader.kt:190)
+	at java.base/java.util.concurrent.CompletableFuture$UniRun.tryFire(CompletableFuture.java:783)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1742)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1728)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool.awaitQuiescence(ForkJoinPool.java:2984)
+	at com.intellij.idea.StartupUtil.start(StartupUtil.java:297)
+	at com.intellij.idea.Main.bootstrap(Main.java:130)
+	at com.intellij.idea.Main.main(Main.java:81)
+Caused by: java.lang.UnsupportedClassVersionError: org/heaphop/HelloAction has been compiled by a more recent version of the Java Runtime (class file version 60.0), this version of the Java Runtime only recognizes class file versions up to 55.0
+	at java.base/java.lang.ClassLoader.defineClass2(Native Method)
+	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1109)
+	at com.intellij.util.lang.UrlClassLoader.consumeClassData(UrlClassLoader.java:290)
+	at com.intellij.util.lang.ZipResourceFile.findClass(ZipResourceFile.java:116)
+	at com.intellij.util.lang.JarLoader.findClass(JarLoader.java:55)
+	at com.intellij.util.lang.ClassPath.findClassInLoader(ClassPath.java:217)
+	at com.intellij.util.lang.ClassPath.findClass(ClassPath.java:176)
+	at com.intellij.ide.plugins.cl.PluginClassLoader.loadClassInsideSelf(PluginClassLoader.java:399)
+	... 21 more
+2021-11-01 21:07:38,741 [  14745]  ERROR - nSystem.impl.ActionManagerImpl - IntelliJ IDEA 2021.3 EAP  Build #IC-213.5449.25 
+2021-11-01 21:07:38,741 [  14745]  ERROR - nSystem.impl.ActionManagerImpl - JDK: 11.0.12; VM: OpenJDK 64-Bit Server VM; Vendor: JetBrains s.r.o. 
+2021-11-01 21:07:38,741 [  14745]  ERROR - nSystem.impl.ActionManagerImpl - OS: Windows 10 
+2021-11-01 21:07:38,742 [  14746]  ERROR - nSystem.impl.ActionManagerImpl - Plugin to blame: Cel Mai Plugoff version: 2020.3.2 
+2021-11-01 21:07:38,742 [  14746]  ERROR - nSystem.impl.ActionManagerImpl - Last Action:  
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDOUT - Searchable options index builder failed 
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDERR - java.lang.IllegalStateException: Cannot find action by id HeapHop.Actions.HelloAction 
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDERR - 	at com.intellij.ide.ui.search.TraverseUIStarter.processKeymap(TraverseUIStarter.java:275) 
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDERR - 	at com.intellij.ide.ui.search.TraverseUIStarter.startup(TraverseUIStarter.java:134) 
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDERR - 	at com.intellij.ide.ui.search.TraverseUIStarter.main(TraverseUIStarter.java:90) 
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDERR - 	at com.intellij.idea.ApplicationLoader$startApp$3.run(ApplicationLoader.kt:190) 
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDERR - 	at java.base/java.util.concurrent.CompletableFuture$UniRun.tryFire(CompletableFuture.java:783) 
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDERR - 	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506) 
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDERR - 	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1742) 
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDERR - 	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1728) 
+2021-11-01 21:07:38,804 [  14808]   INFO -                         STDERR - 	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290) 
+2021-11-01 21:07:38,805 [  14809]   INFO -                         STDERR - 	at java.base/java.util.concurrent.ForkJoinPool.awaitQuiescence(ForkJoinPool.java:2984) 
+2021-11-01 21:07:38,805 [  14809]   INFO -                         STDERR - 	at com.intellij.idea.StartupUtil.start(StartupUtil.java:297) 
+2021-11-01 21:07:38,805 [  14809]   INFO -                         STDERR - 	at com.intellij.idea.Main.bootstrap(Main.java:130) 
+2021-11-01 21:07:38,805 [  14809]   INFO -                         STDERR - 	at com.intellij.idea.Main.main(Main.java:81) 
+2021-11-01 21:07:38,806 [  14810]   INFO - il.indexing.FileBasedIndexImpl - START INDEX SHUTDOWN 
+2021-11-01 21:07:38,890 [  14894]   INFO - tellij.psi.stubs.StubIndexImpl - StubIndexExtension-s were unloaded 
+2021-11-01 21:07:39,042 [  15046]   INFO - il.indexing.FileBasedIndexImpl - END INDEX SHUTDOWN 
+2021-11-01 21:07:39,042 [  15046]   INFO - fs.persistent.PersistentFSImpl - VFS dispose started 
+2021-11-01 21:07:39,051 [  15055]   INFO - fs.persistent.PersistentFSImpl - VFS dispose completed 
+2021-11-01 21:07:39,051 [  15055]   INFO - stubs.SerializationManagerImpl - Start shutting down C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\system\index\rep.names 
+2021-11-01 21:07:39,052 [  15056]   INFO - stubs.SerializationManagerImpl - Finished shutting down C:\Users\radu_\Desktop\heap-hop-plugin\plugin\build\idea-sandbox\system\index\rep.names 
+2021-11-01 21:07:39,052 [  15056]   INFO -        #com.intellij.idea.Main - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------ 
+2021-11-01 21:07:39,053 [  15057]   INFO - org.jetbrains.io.BuiltInServer - web server stopped 
