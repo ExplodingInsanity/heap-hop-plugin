@@ -1,0 +1,6 @@
+plugin/build/*
+plugin/gradle/*
+plugin/.idea/*
+plugin/.gradle/*
+plugin/gradlew
+plugin/gradlew.bat

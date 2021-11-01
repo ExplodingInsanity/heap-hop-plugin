@@ -7,9 +7,8 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public interface Visualizer {
-    default void getState() {
-        JSONObject fields = encodeVisualizer(this);
-        System.out.println(fields);
+    default JSONObject getState() {
+        return encodeVisualizer(this);
     }
 
     default JSONObject encodeVisualizer(Visualizer visualizerObject) {

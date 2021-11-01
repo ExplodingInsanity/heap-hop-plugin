@@ -1,16 +1,17 @@
 package org.heaphop;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.json.simple.JSONObject;
 
 public class Main {
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
         ll.ll = new LinkedList();
         ll.ll.value = new int[]{1,2,3};
-        ll.getState();
+        JSONObject fields = ll.getState();
+
+        DrawingServer drawingServer = new DrawingServer("localhost:24567", "test.bat");
+        drawingServer.sendPostRequest("/query", fields);
+//        drawingServer.stopServer();
     }
 
     static class LinkedList implements Visualizer {
