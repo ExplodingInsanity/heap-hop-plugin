@@ -1,0 +1,57 @@
+.canvas {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.element {
+    height: 100px;
+    width: 100px;
+    background-color: #2a9d8f;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    display: table;
+    cursor: grabbing;
+    transition: transform .2s;
+}
+
+.element:hover {
+    transform: scale(1.2);
+}
+
+.element > p {
+    text-align:center;
+    vertical-align: middle;
+    display: table-cell;
+    user-select: none;
+}
+
+.element:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.arrow-right:after {
+    content: "";
+    display: inline-block !important;
+    width: 0;
+    height: 0;
+    border-left: 8px solid #264653;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    vertical-align: middle;
+}
+
+.arrow-right:before {
+    width: 35px;
+    height: 2px;
+    background: #264653;
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+}

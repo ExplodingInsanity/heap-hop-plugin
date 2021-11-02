@@ -21,19 +21,20 @@ const bodyParser = require("body-parser");
 const app = express();
 let requestedJSON = {};
 
-app.listen(24567, () => {
-  console.log("Application started and Listening on port 24567");
+app.listen(24563, () => {
+  console.log("Application started and Listening on port 24563");
 });
 
 // loading css and js using this
 app.use(express.static(__dirname));
 
 // get our app to use body parser
-app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.json())
 
 app.post("/query", (req, res) => {
   requestedJSON = req.body;
-  res.sendFile(__dirname + "/index.html");
+  res.status(200).send("../frontend/index.html");
 });
 
 app.get("/query", (req, res) => {

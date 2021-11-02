@@ -25,16 +25,44 @@ const drawNode = (value, location, isLast) => {
   }
 }
 
-const URL = 'http://localhost:24567/query'
+const atoms = []
+
+const drawFromJSON = (requestedJSON) => {
+  let hasChildren;
+  const localAtoms = {}
+  const keys = Object.keys(requestedJSON);
+  if(requestedJSON === null) return false;
+  for(const key of keys) {
+    if(key !== 'type') {
+      if(requestedJSON[key]['type'] === 'visualizer') {
+        hasChildren = drawFromJSON(requestedJSON[key]['value'])
+      } else {
+        localAtoms[key] = requestedJSON[key]['value']
+      }
+    }
+  }
+  let text = '';
+  for(const atom of Object.entries(localAtoms)) {
+    text += atom[0] + ": " + atom[1] + `<br>`
+  }
+  atoms.push(text)
+  return true;
+}
+
+const drawFromAtoms = (canvas) => {
+  atoms.slice(0).reverse().map((x, index) => {
+    drawCircle(x, canvas)
+    if(index !== atoms.length - 1) {
+      drawArrow(canvas);
+    }
+  })
+}
+
+const URL = 'http://localhost:24563/query'
 
 window.onload = () => {
   const canvas = document.getElementById('canvas');
   fetch(URL)
-      .then(response => console.log(response))
-  // for (let i = 0; i < initialObj.length; i++) {
-  //   drawNode(initialObj[i].fields.value, canvas, i === initialObj.length - 1);
-  // }
-  // for (let i = 0; i < 3; i++) {
-  //   drawNode(3, canvas, i === 2);
-  // }
+      .then(response=>response.json())
+      .then(data=>{ drawFromJSON(data); drawFromAtoms(canvas) })
 }

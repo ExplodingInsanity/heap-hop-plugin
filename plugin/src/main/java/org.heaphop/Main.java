@@ -10,14 +10,20 @@ public class Main {
         ll.ll.value = 2;
         ll.ll.ll = new LinkedList();
         ll.ll.ll.value = 3;
-//        System.out.println(ll.getState());
-        DrawingServer drawingServer = new DrawingServer("http://localhost:24567", "../frontend/server.js");
-        drawingServer.sendPostRequest("/query", ll.getState());
-        drawingServer.stopServer();
+        ll.ll.ll.ll = new LinkedList();
+        ll.ll.ll.ll.value = 4;
+        System.out.println(ll.getState());
+        DrawingServer drawingServer = new DrawingServer("http://localhost:24563", "../frontend/server.js");
+        try {
+            drawingServer.sendPostRequest("/query", ll.getState());
+        } finally {
+            drawingServer.stopServer();
+        }
     }
 
     static class LinkedList implements Visualizer {
         int value;
+        String nume = "Andrei";
         LinkedList ll;
     }
 }

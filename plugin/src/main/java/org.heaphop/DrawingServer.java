@@ -8,6 +8,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 public class DrawingServer {
@@ -26,15 +27,18 @@ public class DrawingServer {
             StringEntity entity = new StringEntity(json.toString());
 
             httpPost.setEntity(entity);
-            httpPost.setHeader("Accept", "text/html");
+            httpPost.setHeader("Accept", "text/plain");
             httpPost.setHeader("Content-type", "application/json");
 
             CloseableHttpResponse httpResponse = client.execute(httpPost);
             if (httpResponse.getStatusLine().getStatusCode() != 200) {
                 System.out.println("Couldn't send data!");
-            }
-            else {
-                System.out.println(EntityUtils.toString(httpResponse.getEntity()));
+            } else {
+//                System.out.println(EntityUtils.toString(httpResponse.getEntity()));
+                File file = new File(EntityUtils.toString(httpResponse.getEntity()));
+                Runtime.getRuntime().exec(String.format(
+                        "cmd /c start chrome --disable-web-security --disable-gpu --user-data-dir=%%HOMEPATH%%\\chromeTemp %s",
+                        file.getAbsolutePath()));
             }
         } catch (IOException e) {
             e.printStackTrace();
