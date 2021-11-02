@@ -7,13 +7,12 @@ public class Main {
         LinkedList ll = new LinkedList();
         ll.value = 1;
         ll.ll = new LinkedList();
-        lll.ll.value = 2;
+        ll.ll.value = 2;
         ll.ll.ll = new LinkedList();
         ll.ll.ll.value = 3;
-        ll.getState();
-        // TODO: change the file path from test.js to something else
-        DrawingServer drawingServer = new DrawingServer("localhost:24567", "test.js");
-        drawingServer.sendPostRequest("/query", fields);
+//        System.out.println(ll.getState());
+        DrawingServer drawingServer = new DrawingServer("http://localhost:24567", "../frontend/server.js");
+        drawingServer.sendPostRequest("/query", ll.getState());
         drawingServer.stopServer();
     }
 

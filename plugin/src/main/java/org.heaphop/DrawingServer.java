@@ -26,7 +26,7 @@ public class DrawingServer {
             StringEntity entity = new StringEntity(json.toString());
 
             httpPost.setEntity(entity);
-            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Accept", "text/html");
             httpPost.setHeader("Content-type", "application/json");
 
             CloseableHttpResponse httpResponse = client.execute(httpPost);
@@ -43,7 +43,6 @@ public class DrawingServer {
 
     private static void startServer(String pathToServer) {
         try {
-            // TODO: check if the command to run nodejs is node
             process = Runtime.getRuntime().exec(String.format("cmd /c node %s", pathToServer));
         } catch (IOException e) {
             e.printStackTrace();
