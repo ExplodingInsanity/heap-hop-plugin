@@ -13,12 +13,13 @@ public class Main {
         ll.ll.ll.ll = new LinkedList();
         ll.ll.ll.ll.value = 4;
         System.out.println(ll.getState());
-        DrawingServer drawingServer = new DrawingServer("http://localhost:24563", "../frontend/server.js");
-        try {
-            drawingServer.sendPostRequest("/query", ll.getState());
-        } finally {
-            drawingServer.stopServer();
-        }
+//        DrawingServer drawingServer = new DrawingServer("http://localhost:24563", "../frontend/server.js");
+//        try {
+//            drawingServer.sendPostRequest("/query", ll.getState());
+//        } finally {
+//            drawingServer.stopServer();
+//        }
+
     }
 
     static class LinkedList implements Visualizer {

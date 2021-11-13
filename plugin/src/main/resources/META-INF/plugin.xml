@@ -13,7 +13,8 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <toolWindow id="CatViewer" anchor="right" factoryClass="catviewer.WindowFactory"/>
+        <projectService id="CatViewerWindowService" serviceImplementation="catviewer.CatViewerWindowService"/>
     </extensions>
 
     <actions>
