@@ -1,4 +1,4 @@
-package catviewer;
+package webviewer;
 
 import org.cef.callback.CefCallback;
 import org.cef.handler.CefLoadHandler;

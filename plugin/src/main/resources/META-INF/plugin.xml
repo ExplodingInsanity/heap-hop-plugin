@@ -13,11 +13,14 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="CatViewer" anchor="right" factoryClass="catviewer.WindowFactory"/>
-        <projectService id="CatViewerWindowService" serviceImplementation="catviewer.CatViewerWindowService"/>
+        <toolWindow id="WebViewer" anchor="right" factoryClass="webviewer.WindowFactory"/>
+        <projectService id="WebViewerWindowService" serviceImplementation="webviewer.WebViewerWindowService"/>
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
+        <group id="HeapHop.SayHello" text="HeapHop" description="Heap Hop plugin menu">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="org.heaphop.DrawAction" id="HeapHop.Actions.DrawAction" text="Draw" description="Draw based on current code."/>
+        </group>
     </actions>
 </idea-plugin>

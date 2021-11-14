@@ -1,7 +1,5 @@
 package org.heaphop;
 
-import org.json.simple.JSONObject;
-
 public class Main {
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
@@ -19,7 +17,6 @@ public class Main {
 //        } finally {
 //            drawingServer.stopServer();
 //        }
-
     }
 
     static class LinkedList implements Visualizer {

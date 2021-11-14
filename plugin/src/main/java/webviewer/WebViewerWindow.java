@@ -1,4 +1,4 @@
-package catviewer;
+package webviewer;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
@@ -6,16 +6,15 @@ import com.intellij.ui.jcef.JBCefBrowser;
 import org.cef.CefApp;
 
 import javax.swing.*;
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-class CatViewerWindow {
+class WebViewerWindow {
 
     Project project;
     private JBCefBrowser webView;
 
-    public CatViewerWindow(Project project) {
+    public WebViewerWindow(Project project) {
         this.project = project;
         initWebView();
     }

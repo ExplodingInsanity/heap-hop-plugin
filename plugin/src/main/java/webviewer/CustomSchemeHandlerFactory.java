@@ -1,4 +1,4 @@
-package catviewer;
+package webviewer;
 
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefFrame;

@@ -1,4 +1,4 @@
-package catviewer;
+package webviewer;
 
 import com.intellij.openapi.components.ComponentManager;
 import com.intellij.openapi.project.Project;
@@ -12,9 +12,8 @@ class WindowFactory implements ToolWindowFactory {
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         ComponentManager componentManager = ProjectManager.getInstance().getOpenProjects()[0];
-        var catViewerWindow = componentManager.getService(CatViewerWindowService.class).catViewerWindow;
-//        var catViewerWindow = ServiceManager.getService(project, CatViewerWindowService.class).catViewerWindow;
+        var webViewerWindow = componentManager.getService(WebViewerWindowService.class).webViewerWindow;
         var component = toolWindow.getComponent();
-        component.getParent().add(catViewerWindow.content());
+        component.getParent().add(webViewerWindow.content());
     }
 }
