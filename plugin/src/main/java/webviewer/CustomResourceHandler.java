@@ -15,7 +15,7 @@ import java.net.URLConnection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-class CustomResourceHandler implements CefResourceHandler {
+public class CustomResourceHandler implements CefResourceHandler {
 
     private ResourceHandlerState state = new ClosedConnection();
 

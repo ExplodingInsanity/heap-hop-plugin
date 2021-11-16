@@ -1,4 +1,4 @@
-package org.heaphop.webviewer;
+package webviewer;
 
 import com.intellij.openapi.components.ComponentManager;
 import com.intellij.openapi.project.Project;

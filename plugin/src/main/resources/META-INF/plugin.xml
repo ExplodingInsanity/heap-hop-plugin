@@ -21,6 +21,9 @@
         <group id="HeapHop.SayHello" text="HeapHop" description="Heap Hop plugin menu">
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="org.heaphop.DrawAction" id="HeapHop.Actions.DrawAction" text="Draw" description="Draw based on current code."/>
+            <action class="org.heaphop.StartServerAction" id="HeapHop.Actions.StartServerAction" text="Start Server"/>
+            <action class="org.heaphop.StopServerAction" id="HeapHop.Actions.StopServerAction" text="Stop Server"/>
+            <action class="org.heaphop.Check" id="HeapHop.Actions.Check" text="Check"/>
         </group>
     </actions>
 </idea-plugin>

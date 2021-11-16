@@ -2,7 +2,7 @@ package webviewer;
 
 import com.intellij.openapi.project.Project;
 
-class WebViewerWindowService {
+public class WebViewerWindowService {
     Project project;
     WebViewerWindow webViewerWindow;
 
