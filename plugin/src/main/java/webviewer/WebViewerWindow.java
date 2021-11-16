@@ -30,7 +30,9 @@ public class WebViewerWindow {
     }
 
     public void updateContent(String path) {
-        webView.loadURL(path);
+        if (webView != null) {
+            webView.loadURL(path);
+        }
     }
 
     public JComponent content() {

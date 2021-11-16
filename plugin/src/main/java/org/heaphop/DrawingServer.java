@@ -9,6 +9,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class DrawingServer {
     public static Process process;
@@ -50,8 +51,16 @@ public class DrawingServer {
 
     private static void startServer(String pathToServer) {
         try {
-            process = Runtime.getRuntime().exec(String.format("cmd /c node %s", pathToServer));
-
+            if (process == null || !process.isAlive()) {
+                process = Runtime.getRuntime().exec(String.format("cmd /c node %s", pathToServer));
+            }
+//            Scanner s = new Scanner(process.getInputStream()).useDelimiter("\\A");
+//            String result = s.hasNext() ? s.next() : "";
+//            System.out.println(result);
+//
+//            s = new Scanner(process.getErrorStream()).useDelimiter("\\A");
+//            result = s.hasNext() ? s.next() : "";
+//            System.out.println(result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,13 +69,20 @@ public class DrawingServer {
     public void checkStatus() {
         System.out.println(DrawingServer.process.isAlive());
         System.out.println(DrawingServer.process.info());
-        System.out.println(DrawingServer.process.pid());try {
-
+        System.out.println(DrawingServer.process.pid());
+        try {
             System.out.println(DrawingServer.process.exitValue());
-        } catch (Exception exception) {
+        } catch (Exception ignored) {
     }}
 
     public void stopServer() {
-        process.destroyForcibly();
+        if (process.isAlive()) {
+            try {
+                process.children().forEach(ProcessHandle::destroyForcibly);
+                Runtime.getRuntime().exec("cmd /c taskkill /PID " + process.pid() + " /F");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
