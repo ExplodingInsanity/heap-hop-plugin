@@ -1,4 +1,4 @@
-package webviewer;
+package org.heaphop.webviewer;
 
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefFrame;
