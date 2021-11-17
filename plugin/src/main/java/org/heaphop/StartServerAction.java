@@ -8,6 +8,6 @@ public class StartServerAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        SharedData.getInstance().drawingServer = new DrawingServer("http://localhost:24564", "D:\\Users\\Adrian\\Desktop\\Faculta\\An3\\Sem1\\PC\\heap-hop-plugin\\frontend\\server.js");
+        SharedData.getInstance().drawingServer = new DrawingServer(Config.urlToNodeServer, Config.pathToNodeServer);
     }
 }

@@ -4,6 +4,8 @@ const os = require('os');
 const path = require('path');
 // const bodyParser = require("body-parser");
 const app = express();
+const cors=require("cors");
+
 let requestedJSON = {};
 
 //
@@ -59,6 +61,30 @@ const copyDir = (src, dest) => {
 
 let tmpDir, filePath;
 const appPrefix = 'heap-hop';
+
+
+//app.use(cors(corsOptions)) // Use this after the variable declaration
+
+app.use(
+    cors({
+      origin: true,
+      optionsSuccessStatus: 204,
+      credentials: true,
+      preflightContinue: false,
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+    })
+  );
+  app.options(
+    '*',
+    cors({
+      origin: true,
+      optionsSuccessStatus: 204,
+      credentials: true,
+      preflightContinue: false,
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+    })
+  );
+
 try {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), appPrefix));
     filePath = tmpDir + '\\index.html';
@@ -68,9 +94,10 @@ try {
         console.log('HTML is created successfully.');
     });
 
-    copyDir('./css', tmpDir + '\\css')
+    console.log()
+    copyDir(path.join(__dirname, 'css'), path.join(tmpDir, 'css'))
     console.log('CSS transferred successfully.')
-    copyDir('./javascript', tmpDir + '\\javascript')
+    copyDir(path.join(__dirname, 'javascript'), path.join(tmpDir, 'javascript'))
     console.log('JS transferred successfully.')
 
     app.listen(24564, () => {
@@ -86,10 +113,15 @@ try {
 
     app.post("/query", (req, res) => {
         requestedJSON = req.body;
+        console.log(requestedJSON)
         res.status(200).send(filePath);
     });
 
     app.get("/query", (req, res) => {
+        console.log("GET REQUEST")
+        // res.set('page-size', 20);
+        // res.set('Access-Control-Expose-Headers', 'page-size')
+        // res.set('Access-Control-Allow-Origin', ['*']);
         res.status(200).send(requestedJSON);
     })
 } catch (e) {

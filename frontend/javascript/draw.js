@@ -58,11 +58,12 @@ const drawFromAtoms = (canvas) => {
   })
 }
 
-const URL = 'http://localhost:24563/query'
+const URL = 'http://localhost:24564/query'
 
 window.onload = () => {
   const canvas = document.getElementById('canvas');
   fetch(URL)
       .then(response=>response.json())
-      .then(data=>{ drawFromJSON(data); drawFromAtoms(canvas) })
+      .then(data=>{ console.log(data); drawFromJSON(data); drawFromAtoms(canvas) })
+      .catch(error=>alert(error))
 }

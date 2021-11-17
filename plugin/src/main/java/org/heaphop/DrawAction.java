@@ -41,6 +41,7 @@ public class DrawAction extends AnAction {
 
         System.out.println(DrawingServer.process.isAlive());
         String pathToHTML = SharedData.getInstance().drawingServer.sendPostRequest("/query", ll.getState());
+        System.out.println(pathToHTML);
         if (pathToHTML != null) {
             SharedData.getInstance().webViewerWindow.updateContent(pathToHTML);
         }

@@ -53,6 +53,7 @@ public class DrawingServer {
         try {
             if (process == null || !process.isAlive()) {
                 process = Runtime.getRuntime().exec(String.format("cmd /c node %s", pathToServer));
+                //process = Runtime.getRuntime().exec(String.format("cmd /c cat %s", pathToServer));
             }
 //            Scanner s = new Scanner(process.getInputStream()).useDelimiter("\\A");
 //            String result = s.hasNext() ? s.next() : "";
