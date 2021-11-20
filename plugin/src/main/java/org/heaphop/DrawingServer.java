@@ -36,12 +36,6 @@ public class DrawingServer {
                 System.out.println("Response code: " + httpResponse.getStatusLine().getStatusCode());
             } else {
                 return EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-
-//                System.out.println(EntityUtils.toString(httpResponse.getEntity()));
-//                File file = new File(EntityUtils.toString(httpResponse.getEntity()));
-//                Runtime.getRuntime().exec(String.format(
-//                        "cmd /c start chrome --disable-web-security --disable-gpu --user-data-dir=%%HOMEPATH%%\\chromeTemp %s",
-//                        file.getAbsolutePath()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,7 +47,7 @@ public class DrawingServer {
         try {
             if (process == null || !process.isAlive()) {
                 process = Runtime.getRuntime().exec(String.format("cmd /c node %s", pathToServer));
-                //process = Runtime.getRuntime().exec(String.format("cmd /c cat %s", pathToServer));
+//                process = Runtime.getRuntime().exec(String.format("cmd /c cat %s", pathToServer));
             }
 //            Scanner s = new Scanner(process.getInputStream()).useDelimiter("\\A");
 //            String result = s.hasNext() ? s.next() : "";

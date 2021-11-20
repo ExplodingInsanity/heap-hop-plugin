@@ -43,7 +43,16 @@ public class DrawAction extends AnAction {
         String pathToHTML = SharedData.getInstance().drawingServer.sendPostRequest("/query", ll.getState());
         System.out.println(pathToHTML);
         if (pathToHTML != null) {
-            SharedData.getInstance().webViewerWindow.updateContent(pathToHTML);
+                System.out.println(pathToHTML);
+                File file = new File(pathToHTML);
+            try {
+                Runtime.getRuntime().exec(String.format(
+                        "cmd /c start chrome %s",
+                        file.getAbsolutePath()));
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            //SharedData.getInstance().webViewerWindow.updateContent(pathToHTML);
         }
         //        DrawingServer.sendPostRequest("/query", ll.getState());
 
