@@ -1,5 +1,7 @@
 package org.heaphop;
 
+import io.perfmark.Link;
+
 import java.util.concurrent.TimeUnit;
 
 public class Main {
@@ -26,11 +28,13 @@ public class Main {
 //        drawingServer.checkStatus();
 //        TimeUnit.SECONDS.sleep(1);
 //        drawingServer.checkStatus();
+        LinkedList ll = new LinkedList();
+        System.out.println(ll.getState());
     }
 
     static class LinkedList implements Visualizer {
         int value;
         String nume = "Andrei";
-        LinkedList ll;
+        int[] a = new int[]{1, 2, 3};
     }
 }

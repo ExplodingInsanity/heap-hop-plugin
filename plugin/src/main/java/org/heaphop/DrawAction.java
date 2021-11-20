@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -47,8 +48,8 @@ public class DrawAction extends AnAction {
 
     private final String nameOfClass = "Main";
     private final String nameOfMethod = "main";
-    private final String destination = "Main.java";
-    private final String sourcePath = "";
+    private final String destination = System.getenv("TMP").concat("/heap-hop/src/main/java/Main.java");
+    private final String sourcePath = System.getenv("TMP").concat("/heap-hop/src/main/java/Main.java");;
 
     public static class Pair<A, B> {
         public A fst;
@@ -104,7 +105,7 @@ public class DrawAction extends AnAction {
                 if (s.contains("static class")){
                     return Arrays.stream(s.split(" ")).map(w -> {
                         if (w.equals(cls)) {
-                            return w + " extends Visualizer";
+                            return w + " implements Visualizer";
                         }else{
                             return w;
                         }
@@ -145,23 +146,24 @@ public class DrawAction extends AnAction {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ;
-
     };
-    // TODO : Move this to "actionPerformed"
-    /*
 
+    @Override
+    public void actionPerformed(@NotNull AnActionEvent e) {
+        Project project  = e.getProject();
+        if (project == null) {
+            return;
+        }
+        String pathToSource = project.getBasePath().concat("/src/"); // Path to the main folder of the user's project
+        String pathToDestination = System.getenv("TMP").concat("/heap-hop/src/main/java/");
+        this.createAndCopyDir(pathToDestination, pathToSource);
 
         Function<String, Stream<String>> txt2insert = s ->
                 Stream.of
-                ( "\t\tDrawingServer drawingServer = new DrawingServer(\"http://localhost:24564\""
-                                + ", \"../frontend/server.js\");"
-                        , "\t\ttry {"
-                        , "\t\t    drawingServer.sendPostRequest(\"/query\", " + s + ".getState());"
-                        , "\t\t    drawingServer.checkStatus();"
-                        , "\t\t} finally {"
-                        , "\t\t    drawingServer.stopServer();"
-                        , "\t\t}");
+                        ( "\t\tDrawingServer drawingServer = new DrawingServer(\"http://localhost:24564\""
+                                        + ", \"" + Config.pathToNodeServer + "\");"
+                                , "\tdrawingServer.sendPostRequest(\"/query\", " + s + ".getState());"
+                                );
 
         writeToFile.accept(
                 findJavaFiles.apply(sourcePath)
@@ -170,50 +172,31 @@ public class DrawAction extends AnAction {
                         .get()
                 , txt2insert);
 
-        executeMain.accept(findJavaFiles.apply(sourcePath), "Main");
+        //executeMain.accept(findJavaFiles.apply(sourcePath), "Main");
+        try {
+            Process pr = Runtime.getRuntime().exec(String.format(
+                "cmd /c %s -p %s run",
+                Paths.get(System.getenv("TMP"), "heap-hop", "gradlew.bat"),
+                Paths.get(System.getenv("TMP"), "heap-hop")
+                ));
 
+            Scanner s = new Scanner(pr.getInputStream()).useDelimiter("\\A");
+            String result = s.hasNext() ? s.next() : "";
+            System.out.println(result);
 
+            s = new Scanner(pr.getErrorStream()).useDelimiter("\\A");
+            result = s.hasNext() ? s.next() : "";
+            System.out.println(result);
 
-     */
-
-
-
-    @Override
-    public void actionPerformed(@NotNull AnActionEvent e) {
-
-        LinkedList ll = new LinkedList();
-        ll.value = 1;
-        ll.ll = new LinkedList();
-        ll.ll.value = 2;
-        ll.ll.ll = new LinkedList();
-        ll.ll.ll.value = 3;
-        ll.ll.ll.ll = new LinkedList();
-        ll.ll.ll.ll.value = 4;
-        System.out.println(ll.getState());
-
-        System.out.println(DrawingServer.process.isAlive());
-        String pathToHTML = SharedData.getInstance().drawingServer.sendPostRequest("/query", ll.getState());
-        System.out.println(pathToHTML);
-        if (pathToHTML != null) {
-                System.out.println(pathToHTML);
-                File file = new File(pathToHTML);
-            try {
-                Runtime.getRuntime().exec(String.format(
-                        "cmd /c start chrome %s",
-                        file.getAbsolutePath()));
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            synchronized (pr) {
+                pr.waitFor();
             }
-            //SharedData.getInstance().webViewerWindow.updateContent(pathToHTML);
-        }
-        //        DrawingServer.sendPostRequest("/query", ll.getState());
 
-        Project project  = e.getProject();
-        if (project == null) {
-            return;
+            Runtime.getRuntime().exec(String.format(
+                    "cmd /c start chrome %s",
+                    Paths.get(System.getenv("TMP"), "heap-hop", "website", "index.html")));
+        } catch (InterruptedException | IOException interruptedException) {
+            interruptedException.printStackTrace();
         }
-        String pathToSource = project.getBasePath(); // Path to the main folder of the user's project
-        String pathToDestination = System.getenv("TMP").concat("/heap-hop/src/");
-        this.createAndCopyDir(pathToDestination, pathToSource);
     }
 }

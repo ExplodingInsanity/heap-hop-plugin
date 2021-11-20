@@ -2,6 +2,7 @@ package webviewer;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
+import com.intellij.ui.jcef.JBCefApp;
 import com.intellij.ui.jcef.JBCefBrowser;
 import org.cef.CefApp;
 import org.heaphop.SharedData;
@@ -9,6 +10,7 @@ import org.heaphop.SharedData;
 import javax.swing.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class WebViewerWindow {
 
@@ -22,7 +24,14 @@ public class WebViewerWindow {
     }
 
     private void initWebView() {
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+        ArrayList<String> args = new ArrayList<>();
+        String[] cefArgs = new String[]{"--disable-web-security"};
+        //CefApp.getInstance(cefArgs);
         webView = new JBCefBrowser();
+
+        webView.setProperty("javaScriptEnabled", true);
+
         registerAppSchemeHandler();
 //        Path tmp = Paths.get(System.getenv("TMP"), "heap-hop", "index.html");
 //        webView.loadURL(tmp.toString());
