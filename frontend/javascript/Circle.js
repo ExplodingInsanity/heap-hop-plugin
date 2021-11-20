@@ -38,7 +38,8 @@ const addCircleClickEvent = (canvas, circle, visualizer) => {
                 drawArrowBetweenCanvases(canvas, circle, firstLine)
             }
             if(drawable[0] === 'list' && drawable[1].length !== 0) {
-                elements = drawList(svg)
+                firstLine = drawList(svg, drawable[1])
+                drawArrowBetweenCanvases(canvas, circle, firstLine)
             }
         }
     })
@@ -78,7 +79,8 @@ const drawCircle = (svg, prev, value, visualizer) => {
     circle.setAttribute('r', radius.toString());
     circle.setAttribute('class', 'circle')
     text.setAttribute('class', 'valueText')
-
+    circle.setAttribute('fill', '#bc4749')
+    
     addCircleHoverEvent(circle)
     addCircleClickEvent(canvas, circle, visualizer)
 
