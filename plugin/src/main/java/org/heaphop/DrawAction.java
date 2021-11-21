@@ -124,13 +124,37 @@ public class DrawAction extends AnAction {
                     .findFirst()
                     .get();
 
+    Function<Stream<String>, Integer> getInsertPosition = ls -> {
+        List<Pair<Integer, String >> tuples = Streams.zip(
+                Stream.iterate(0, a -> a + 1)
+                , ls
+                , Pair::new
+        ).dropWhile(t -> !t.snd.contains("public static void main"))
+                .filter(t -> t.snd.contains("{") || t.snd.contains("}"))
+                .skip(1)
+                .collect(Collectors.toList());
+
+        Integer counter = 1;
+        for (Pair<Integer, String> p : tuples){
+            if (p.snd.equals("{")){
+                counter += 1;
+            }else{
+                counter -= 1;
+            }
+            if(counter == 0) {
+                return p.fst;
+            }
+        }
+        return -1;
+    };
+
     BiConsumer<Path, Function<String, Stream<String>>> writeToFile = (f, fss) -> {
         try {
             BufferedReader objReader = new BufferedReader(new FileReader(String.valueOf(f)));
 
             List<String> org = objReader.lines().collect(Collectors.toList());
 
-            Integer position = 10;
+            Integer position = getInsertPosition.apply(org.stream());
 
             Stream<String> startingLines = org.stream().limit(position);
 
