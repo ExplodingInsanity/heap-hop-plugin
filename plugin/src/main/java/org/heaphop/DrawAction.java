@@ -135,9 +135,10 @@ public class DrawAction extends AnAction {
 
         Integer counter = 1;
         for (Pair<Integer, String> p : tuples){
-            if (p.snd.equals("{")){
+            if (p.snd.contains("{")) {
                 counter += 1;
-            }else{
+            }
+            if (p.snd.contains("}")) {
                 counter -= 1;
             }
             if(counter == 0) {
