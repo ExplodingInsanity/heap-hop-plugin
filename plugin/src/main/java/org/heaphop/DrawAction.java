@@ -91,20 +91,19 @@ public class DrawAction extends AnAction {
         });
     };
 
-    Function<Stream<String>, String> findClassName = ss ->
+    Function<Stream<String>, List<String>> findClassName = ss ->
             ss.filter(s -> s.contains("static class"))
                     .map(s -> Arrays.stream(s.split(" "))
                             .dropWhile(sp -> !sp.equals("class"))
                             .skip(1)
                             .findFirst().get())
-                    .findFirst()
-                    .get();
+                    .collect(Collectors.toList());
 
-    BiFunction<Stream<String>, String, Stream<String>> addExtends = (ss, cls) ->
+    BiFunction<Stream<String>, List<String>, Stream<String>> addExtends = (ss, cls) ->
             ss.map(s -> {
                 if (s.contains("static class")){
                     return Arrays.stream(s.split(" ")).map(w -> {
-                        if (w.equals(cls)) {
+                        if (cls.stream().anyMatch(w::equals)) {
                             return w + " implements Visualizer";
                         }else{
                             return w;
@@ -115,10 +114,10 @@ public class DrawAction extends AnAction {
                 }
             });
 
-    BiFunction<Stream<String>, String, String> findVariableName = (ss, c) ->
-            ss.filter(s -> s.contains(c))
+    BiFunction<Stream<String>, List<String>, String> findVariableName = (ss, c) ->
+            ss.filter(s -> c.stream().anyMatch(s::contains))
                     .map(s -> Arrays.stream(s.split(" "))
-                            .dropWhile(sp -> !sp.equals(c))
+                            .dropWhile(sp -> c.stream().noneMatch(sp::equals))
                             .skip(1)
                             .findFirst().get())
                     .findFirst()
@@ -158,7 +157,7 @@ public class DrawAction extends AnAction {
 
             Stream<String> startingLines = org.stream().limit(position);
 
-            String className = findClassName.apply(org.stream());
+            List<String> className = findClassName.apply(org.stream());
             String variableName = findVariableName.apply(org.stream(), className);
             Stream<String> middleLines = fss.apply(variableName);
 
