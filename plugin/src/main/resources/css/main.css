@@ -1,13 +1,3 @@
-html {
-    height: 100%;
-    width: 100%;
-}
-
-body {
-    height: 100%;
-    width: 100%
-}
-
 .canvas {
     margin: 20px;
     display: flex;
@@ -34,7 +24,7 @@ body {
 }
 
 .element > p {
-    text-align: center;
+    text-align:center;
     vertical-align: middle;
     display: table-cell;
     user-select: none;
@@ -64,33 +54,4 @@ body {
     content: "";
     display: inline-block;
     vertical-align: middle;
-}
-
-.circle {
-    position: absolute;
-    z-index: 1;
-    cursor: grabbing;
-    transition: transform .2s;
-}
-
-.line {
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    fill: #2a9d8f;
-    stroke: rgb(0, 0, 0);
-    stroke-width: 2;
-}
-
-.valueText {
-    text-anchor: middle;
-    word-wrap: break-word;
-    text-decoration: none;
-    pointer-events: none;
-    user-select: none;
-}
-
-.rect {
-    fill: #2a9d8f
 }

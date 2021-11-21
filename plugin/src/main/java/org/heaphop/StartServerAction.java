@@ -2,13 +2,12 @@ package org.heaphop;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.ui.Messages;
 import org.jetbrains.annotations.NotNull;
 
-public class HelloAction extends AnAction {
+public class StartServerAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        Messages.showMessageDialog(e.getProject(), "Hello message","Hello Title", Messages.getInformationIcon());
+        SharedData.getInstance().drawingServer = new DrawingServer(Config.urlToNodeServer, Config.pathToNodeServer);
     }
 }
