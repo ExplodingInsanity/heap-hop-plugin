@@ -4,7 +4,7 @@ const os = require('os');
 const path = require('path');
 // const bodyParser = require("body-parser");
 const app = express();
-const cors=require("cors");
+const cors = require("cors");
 
 let requestedJSON = {};
 
@@ -67,23 +67,23 @@ const appPrefix = 'heap-hop';
 
 app.use(
     cors({
-      origin: true,
-      optionsSuccessStatus: 204,
-      credentials: true,
-      preflightContinue: false,
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+        origin: true,
+        optionsSuccessStatus: 204,
+        credentials: true,
+        preflightContinue: false,
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
     })
-  );
-  app.options(
+);
+app.options(
     '*',
     cors({
-      origin: true,
-      optionsSuccessStatus: 204,
-      credentials: true,
-      preflightContinue: false,
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+        origin: true,
+        optionsSuccessStatus: 204,
+        credentials: true,
+        preflightContinue: false,
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
     })
-  );
+);
 
 try {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), appPrefix));
@@ -113,12 +113,12 @@ try {
 
     app.post("/query", (req, res) => {
         requestedJSON = req.body;
-        console.log(requestedJSON)
+        // console.log(requestedJSON)
         res.status(200).send(filePath);
     });
 
     app.get("/query", (req, res) => {
-        console.log("GET REQUEST")
+        // console.log("GET REQUEST")
         // res.set('page-size', 20);
         // res.set('Access-Control-Expose-Headers', 'page-size')
         // res.set('Access-Control-Allow-Origin', ['*']);

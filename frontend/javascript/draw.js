@@ -5,21 +5,21 @@ const isObject = (obj) => {
 // draw simple circle
 // div + css
 // location may be the canvas
-const drawCircle = (value, location) => {
-    const node = document.createElement('div');
-    node.id = Math.random().toString(36).substr(2, 9);
-    node.innerHTML = `<p>${isObject(value) ? "" : value}</p>`;
-    node.classList.add('element');
-    location.appendChild(node);
-}
+// const drawCircle = (value, location) => {
+//     const node = document.createElement('div');
+//     node.id = Math.random().toString(36).substr(2, 9);
+//     node.innerHTML = `<p>${isObject(value) ? "" : value}</p>`;
+//     node.classList.add('element');
+//     location.appendChild(node);
+// }
 
 // draw simple arrow
 // div + css
-const drawArrow = (location) => {
-    const arrow = document.createElement('div');
-    arrow.classList.add('arrow-right');
-    location.appendChild(arrow);
-}
+// const drawArrow = (location) => {
+//     const arrow = document.createElement('div');
+//     arrow.classList.add('arrow-right');
+//     location.appendChild(arrow);
+// }
 
 // draw simple node (circle + arrow)
 const drawNode = (value, location, isLast) => {
@@ -36,38 +36,84 @@ const drawNode = (value, location, isLast) => {
 // once we find an atom we can place it in the localAtoms dictionary
 // put all of them into the atoms array
 // visualizer = another data structure; atom = simple data type (int, string etc)
-const atoms = []
-const drawFromJSON = (requestedJSON) => {
+const visualizers = []
+let id = 0
+
+const drawFromJSON = (requestedJSON, id) => {
     let hasChildren;
-    const localAtoms = {}
     const keys = Object.keys(requestedJSON);
-    if (requestedJSON === null) return false;
+    visualizers.push({
+        'id': id,
+        'dictionary': [],
+        'list': [],
+        'atom': ''
+    })
     for (const key of keys) {
         if (key !== 'type') {
             if (requestedJSON[key]['type'] === 'visualizer') {
-                hasChildren = drawFromJSON(requestedJSON[key]['value'])
+                hasChildren = drawFromJSON(requestedJSON[key]['value'], id + 1)
             } else {
-                localAtoms[key] = requestedJSON[key]['value']
+                const type = requestedJSON[key]['type']
+
+                const visualizer = visualizers.filter(x => x['id'] === id)[0]
+                if (type !== undefined) {
+                    if (requestedJSON[key]['type'] === 'atom') {
+                        visualizer[type] += key + ": " + requestedJSON[key]['value'] + '\n'
+                    } else {
+                        const value = requestedJSON[key]['value']
+                        if (value.length !== 0) {
+                            visualizer[type].push(value)
+                        }
+                    }
+                }
             }
         }
     }
-    let text = '';
-    for (const atom of Object.entries(localAtoms)) {
-        text += atom[0] + ": " + atom[1] + `<br>`
-    }
-    atoms.push(text)
     return true;
 }
 
 // For each atom found we draw a new circle
 // in reverse order because we computed it recursively in drawFromJSON
 const drawFromAtoms = (canvas) => {
-    atoms.slice(0).reverse().map((x, index) => {
-        drawCircle(x, canvas)
-        if (index !== atoms.length - 1) {
-            drawArrow(canvas);
+    const elements = []
+    let nextCircle = []
+
+    let svg = document.getElementById('visualizerCanvas')
+    if (svg !== null) {
+        canvas.removeChild(svg)
+    }
+
+    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute('id', 'visualizerCanvas')
+    svg.setAttribute('width', '100%')
+    svg.setAttribute('class', 'canvas')
+    canvas.appendChild(svg);
+
+    visualizers.slice(0).map((x, index) => {
+        const currentPrev = nextCircle[0]
+        nextCircle = drawCircle(svg, currentPrev, x['atom'], x)
+        elements.push(nextCircle)
+        if (currentPrev !== undefined && nextCircle[0] !== undefined) {
+            drawArrow(svg, currentPrev.getAttribute('cx'),
+                currentPrev.getAttribute('cy'),
+                nextCircle[0].getAttribute('cx'),
+                nextCircle[0].getAttribute('cy'));
         }
     })
+
+    elements.forEach(element => {
+        svg.appendChild(element[0]);
+        svg.appendChild(element[1])
+    })
+
+    // const useVisualizer = document.createElementNS("http://www.w3.org/2000/svg", 'use')
+    // const useDetails = document.createElementNS("http://www.w3.org/2000/svg", 'use');
+    //
+    // useVisualizer.setAttribute('xlink:href', 'visualizerCanvas')
+    // useDetails.setAttribute('xlink:href', 'detailCanvas')
+    //
+    // canvas.appendChild(useVisualizer)
+    // canvas.appendChild(useDetails)
 }
 
 // URL used for get request
@@ -80,8 +126,7 @@ window.onload = () => {
     fetch(URL)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-            drawFromJSON(data);
+            drawFromJSON(data, 0);
             drawFromAtoms(canvas)
         })
         .catch(error => alert(error))
