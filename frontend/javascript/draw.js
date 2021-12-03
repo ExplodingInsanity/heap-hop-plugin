@@ -105,19 +105,10 @@ const drawFromAtoms = (canvas) => {
         svg.appendChild(element[0]);
         svg.appendChild(element[1])
     })
-
-    // const useVisualizer = document.createElementNS("http://www.w3.org/2000/svg", 'use')
-    // const useDetails = document.createElementNS("http://www.w3.org/2000/svg", 'use');
-    //
-    // useVisualizer.setAttribute('xlink:href', 'visualizerCanvas')
-    // useDetails.setAttribute('xlink:href', 'detailCanvas')
-    //
-    // canvas.appendChild(useVisualizer)
-    // canvas.appendChild(useDetails)
 }
 
 // URL used for get request
-const URL = 'http://localhost:24564/query'
+const URL = 'http://localhost:24561/query'
 
 window.onload = () => {
     // canvas element

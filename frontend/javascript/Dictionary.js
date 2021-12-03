@@ -1,23 +1,22 @@
-const width = 100
-const height = 100
-const startX = 20
-const startY = 20
+const width = 80
+const height = 80
+const KEY_VALUE_DISTANCE = 200
 
-const drawDictionary = (svg, dictionaryArray) => {
+const drawDictionary = (svg, dictionaryArray, circle) => {
     const elements = []
     let currentKeyRect = []
     let currentValueRect = []
 
     let firstLine = []
 
-    let x = startX
-    let y = startY
+    let x = parseInt(circle.getAttribute('cx')) - KEY_VALUE_DISTANCE / 2 - width / 2
+    let y = 0
 
     dictionaryArray[0].forEach(entry => {
         // create key node
         currentKeyRect = drawRect(svg, x, y, width, height, `key: ${entry['key']['value']}`)
         // create value node
-        currentValueRect = drawRect(svg, x + 200, y, width, height, `value: ${entry['value']['value']}`)
+        currentValueRect = drawRect(svg, x + KEY_VALUE_DISTANCE, y, width, height, `value: ${entry['value']['value']}`)
 
         y += height + 20
 
@@ -39,5 +38,5 @@ const drawDictionary = (svg, dictionaryArray) => {
         svg.appendChild(element[1])
     })
 
-    return firstLine
+    return [firstLine, x + KEY_VALUE_DISTANCE + width, y]
 }
