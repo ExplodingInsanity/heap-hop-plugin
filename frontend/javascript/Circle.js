@@ -15,7 +15,7 @@ const addCircleHoverEvent = (circle) => {
     })
 }
 
-const addCircleClickEvent = (canvas, circle, visualizer) => {
+const addCircleClickEvent = (canvas, circle, visualizer, document) => {
     circle.addEventListener('click', (e) => {
         let svg = document.getElementById('detailCanvas')
         if (svg !== null) {
@@ -72,7 +72,7 @@ const drawArrowBetweenCanvases = (canvas, circle, firstLine) => {
     currentArrow = drawArrow(canvas, cx, (parseInt(cy) + radius).toString(), x2.toString(), y2.toString())
 }
 
-const drawCircle = (svg, prev, value, visualizer) => {
+const drawCircle = (svg, prev, value, visualizer, document) => {
     const svgNS = svg.namespaceURI;
     const circle = document.createElementNS(svgNS, 'circle');
     const text = document.createElementNS(svgNS, 'text')
@@ -110,7 +110,7 @@ const drawCircle = (svg, prev, value, visualizer) => {
     canvasY2 = parseInt(values[3])
 
     addCircleHoverEvent(circle)
-    addCircleClickEvent(svg, circle, visualizer)
+    addCircleClickEvent(svg, circle, visualizer, document)
 
     let tspan
     for (const val of value.split('\n')) {
@@ -124,3 +124,8 @@ const drawCircle = (svg, prev, value, visualizer) => {
     // svg.appendChild(circle);
     return [circle, text];
 }
+
+
+module.exports = {
+    drawCircle
+};

@@ -5,6 +5,8 @@ const path = require('path');
 // const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
+const draw = require("./javascript/draw.js")
+const HtmlFileSoup = require("./htmlFileSoup.js")
 
 let requestedJSON = {};
 
@@ -59,6 +61,18 @@ const copyDir = (src, dest) => {
     }
 };
 
+const createHtmlFile = (requestedJSON) => {
+    const OUT_PATH = "index.html"; // would be nice to get from command line
+
+    let htmlModel = fs.readFileSync("models/index.html")
+    let soup = new HtmlFileSoup(htmlModel)
+    draw.drawFromJSON(requestedJSON, 0, soup.document);
+    let canvas = soup.document.getElementById('canvas');
+    draw.drawFromAtoms(canvas, soup.document);
+    fs.writeFileSync(OUT_PATH, soup.document.getElementsByTagName('html')[0].outerHTML)
+    return path.resolve(OUT_PATH)
+}
+
 let tmpDir, filePath;
 const appPrefix = 'heap-hop';
 
@@ -86,19 +100,19 @@ app.options(
 );
 
 try {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), appPrefix));
-    filePath = tmpDir + '\\index.html';
-    console.log(filePath)
-    fs.writeFile(filePath, buildHtml(), (err) => {
-        if (err) throw err;
-        console.log('HTML is created successfully.');
-    });
+    // tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), appPrefix));
+    // filePath = tmpDir + '\\index.html';
+    // console.log(filePath)
+    // fs.writeFile(filePath, buildHtml(), (err) => {
+    //     if (err) throw err;
+    //     console.log('HTML is created successfully.');
+    // });
 
-    console.log()
-    copyDir(path.join(__dirname, 'css'), path.join(tmpDir, 'css'))
-    console.log('CSS transferred successfully.')
-    copyDir(path.join(__dirname, 'javascript'), path.join(tmpDir, 'javascript'))
-    console.log('JS transferred successfully.')
+    // console.log()
+    // copyDir(path.join(__dirname, 'css'), path.join(tmpDir, 'css'))
+    // console.log('CSS transferred successfully.')
+    // copyDir(path.join(__dirname, 'javascript'), path.join(tmpDir, 'javascript'))
+    // console.log('JS transferred successfully.')
 
     app.listen(24564, () => {
         console.log("Application started and Listening on port 24564");
@@ -111,28 +125,35 @@ try {
     // app.use(bodyParser.urlencoded({ extended: true }))
     app.use(express.json())
 
+//requestedJSON = {"ll":{"type":"visualizer","value":{"ll":{"type":"visualizer","value":{"ll":{"type":"visualizer","value":{"ll":{},"type":"visualizer","value":{"type":"atom","value":4}}},"type":"visualizer","value":{"type":"atom","value":3}}},"type":"visualizer","value":{"type":"atom","value":2}}},"type":"visualizer","value":{"type":"atom","value":1}};
+// console.log(requestedJSON)
+//console.log(createHtmlFile(requestedJSON))
+// console.log(filePath)
+// res.status(200).send(filePath);
+
     app.post("/query", (req, res) => {
         requestedJSON = req.body;
         // console.log(requestedJSON)
+        let filePath = createHtmlFile(requestedJSON)
         res.status(200).send(filePath);
     });
 
-    app.get("/query", (req, res) => {
-        // console.log("GET REQUEST")
-        // res.set('page-size', 20);
-        // res.set('Access-Control-Expose-Headers', 'page-size')
-        // res.set('Access-Control-Allow-Origin', ['*']);
-        res.status(200).send(requestedJSON);
-    })
+    // app.get("/query", (req, res) => {
+    //     // console.log("GET REQUEST")
+    //     // res.set('page-size', 20);
+    //     // res.set('Access-Control-Expose-Headers', 'page-size')
+    //     // res.set('Access-Control-Allow-Origin', ['*']);
+    //     res.status(200).send(requestedJSON);
+    // })
 } catch (e) {
     console.error(`An error has occurred when creating the file. Error: ${e}`)
 }
-// finally {
-//     try {
-//         if (tmpDir) {
-//             fs.rmSync(tmpDir, {recursive: true});
-//         }
-//     } catch (e) {
-//         console.error(`An error has occurred while removing the temp folder at ${tmpDir}. Please remove it manually. Error: ${e}`);
-//     }
-// }
+finally {
+    try {
+        if (tmpDir) {
+            fs.rmSync(tmpDir, {recursive: true});
+        }
+    } catch (e) {
+        console.error(`An error has occurred while removing the temp folder at ${tmpDir}. Please remove it manually. Error: ${e}`);
+    }
+}

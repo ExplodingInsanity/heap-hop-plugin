@@ -1,3 +1,6 @@
+const circle = require("./Circle.js");
+const linkers = require("./Linkers.js");
+
 const isObject = (obj) => {
     return typeof obj === 'object';
 }
@@ -24,10 +27,10 @@ const isObject = (obj) => {
 // draw simple node (circle + arrow)
 const drawNode = (value, location, isLast) => {
     if (value.type === 'atom') {
-        drawCircle(value.value, location);
+        circle.drawCircle(value.value, location);
     }
     if (!isLast) {
-        drawArrow(location);
+        linkers.drawArrow(location);
     }
 }
 
@@ -74,7 +77,7 @@ const drawFromJSON = (requestedJSON, id) => {
 
 // For each atom found we draw a new circle
 // in reverse order because we computed it recursively in drawFromJSON
-const drawFromAtoms = (canvas) => {
+const drawFromAtoms = (canvas, document) => {
     const elements = []
     let nextCircle = []
 
@@ -91,13 +94,14 @@ const drawFromAtoms = (canvas) => {
 
     visualizers.slice(0).map((x, index) => {
         const currentPrev = nextCircle[0]
-        nextCircle = drawCircle(svg, currentPrev, x['atom'], x)
+        nextCircle = circle.drawCircle(svg, currentPrev, x['atom'], x, document)
         elements.push(nextCircle)
         if (currentPrev !== undefined && nextCircle[0] !== undefined) {
-            drawArrow(svg, currentPrev.getAttribute('cx'),
+            linkers.drawArrow(svg, currentPrev.getAttribute('cx'),
                 currentPrev.getAttribute('cy'),
                 nextCircle[0].getAttribute('cx'),
-                nextCircle[0].getAttribute('cy'));
+                nextCircle[0].getAttribute('cy'),
+                document);
         }
     })
 
@@ -108,7 +112,8 @@ const drawFromAtoms = (canvas) => {
 }
 
 // URL used for get request
-const URL = 'http://localhost:24561/query'
+/*
+const URL = 'http://localhost:24564/query'
 
 window.onload = () => {
     // canvas element
@@ -121,4 +126,9 @@ window.onload = () => {
             drawFromAtoms(canvas)
         })
         .catch(error => alert(error))
-}
+}*/
+
+module.exports = {
+    drawFromJSON,
+    drawFromAtoms
+};

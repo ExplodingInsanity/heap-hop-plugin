@@ -1,4 +1,4 @@
-const drawArrow = (svg, x1, y1, x2, y2) => {
+const drawArrow = (svg, x1, y1, x2, y2, document) => {
     const svgNS = svg.namespaceURI;
     const line = document.createElementNS(svgNS, 'line');
     line.setAttribute('x1', x1)
@@ -9,4 +9,8 @@ const drawArrow = (svg, x1, y1, x2, y2) => {
     svg.appendChild(line);
 
     return line
+}
+
+module.exports = {
+    drawArrow
 }
