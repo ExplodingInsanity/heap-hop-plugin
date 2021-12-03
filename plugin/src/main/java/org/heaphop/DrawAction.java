@@ -4,11 +4,11 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
-import java.io.File;
-import java.io.IOException;
+
+import java.io.*;
+
 import com.google.common.collect.Streams;
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.function.*;
 import java.util.stream.Collectors;
@@ -48,8 +49,11 @@ public class DrawAction extends AnAction {
 
     private final String nameOfClass = "Main";
     private final String nameOfMethod = "main";
-    private final String destination = System.getenv("TMP").concat("/heap-hop/src/main/java/Main.java");
-    private final String sourcePath = System.getenv("TMP").concat("/heap-hop/src/main/java/Main.java");;
+    private final String destination = System.getenv("TMP").concat("/heap-hop/src/main/java/");
+    private final String sourcePath = System.getenv("TMP").concat("/heap-hop/src/main/java/");
+    private final String configPath = "......../app.properties";
+    // example file :
+    // classes = Main,asd
 
     public static class Pair<A, B> {
         public A fst;
@@ -62,10 +66,12 @@ public class DrawAction extends AnAction {
 
 
 
-    Function<String, List<Path>> findJavaFiles = path -> {
+    BiFunction<String, List<String>, List<Path>> findJavaFiles = (path, files) -> {
         try {
             return Files.walk(Paths.get(path))
-                    .filter(f -> f.getFileName().toString().equals(nameOfClass.concat(".java")))
+                    //.filter(f -> f.getFileName().toString().equals(nameOfClass.concat(".java")))
+                    // f -> C:\afasdf\Main.txt; file -> Main
+                    .filter(f -> files.stream().anyMatch(file -> file.concat(".java").equals(f.getFileName().toString())))
                     .collect(Collectors.toList());
         }catch (Exception e) {
             throw new RuntimeException(e);
@@ -91,20 +97,19 @@ public class DrawAction extends AnAction {
         });
     };
 
-    Function<Stream<String>, String> findClassName = ss ->
+    Function<Stream<String>, List<String>> findClassName = ss ->
             ss.filter(s -> s.contains("static class"))
                     .map(s -> Arrays.stream(s.split(" "))
                             .dropWhile(sp -> !sp.equals("class"))
                             .skip(1)
                             .findFirst().get())
-                    .findFirst()
-                    .get();
+                    .collect(Collectors.toList());
 
-    BiFunction<Stream<String>, String, Stream<String>> addExtends = (ss, cls) ->
+    BiFunction<Stream<String>, List<String>, Stream<String>> addExtends = (ss, cls) ->
             ss.map(s -> {
                 if (s.contains("static class")){
                     return Arrays.stream(s.split(" ")).map(w -> {
-                        if (w.equals(cls)) {
+                        if (cls.stream().anyMatch(w::equals)) {
                             return w + " implements Visualizer";
                         }else{
                             return w;
@@ -115,37 +120,83 @@ public class DrawAction extends AnAction {
                 }
             });
 
-    BiFunction<Stream<String>, String, String> findVariableName = (ss, c) ->
-            ss.filter(s -> s.contains(c))
+    Supplier<Stream<String>> getConfig = () -> {
+        Properties appProps = new Properties();
+        try {
+            appProps.load(new FileInputStream(configPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return Arrays.stream(appProps.getProperty("classes").split(","));
+    };
+
+    BiFunction<Stream<String>, List<String>, String> findVariableName = (ss, c) ->
+            ss.filter(s -> c.stream().anyMatch(s::contains))
                     .map(s -> Arrays.stream(s.split(" "))
-                            .dropWhile(sp -> !sp.equals(c))
+                            .dropWhile(sp -> c.stream().noneMatch(sp::equals))
                             .skip(1)
                             .findFirst().get())
                     .findFirst()
                     .get();
 
-    BiConsumer<Path, Function<String, Stream<String>>> writeToFile = (f, fss) -> {
-        try {
-            BufferedReader objReader = new BufferedReader(new FileReader(String.valueOf(f)));
+    Function<Stream<String>, Integer> getInsertPosition = ls -> {
+        List<Pair<Integer, String >> tuples = Streams.zip(
+                Stream.iterate(0, a -> a + 1)
+                , ls
+                , Pair::new
+        ).dropWhile(t -> !t.snd.contains("public static void main"))
+                .filter(t -> t.snd.contains("{") || t.snd.contains("}"))
+                .skip(1)
+                .collect(Collectors.toList());
 
-            List<String> org = objReader.lines().collect(Collectors.toList());
-
-            Integer position = 10;
-
-            Stream<String> startingLines = org.stream().limit(position);
-
-            String className = findClassName.apply(org.stream());
-            String variableName = findVariableName.apply(org.stream(), className);
-            Stream<String> middleLines = fss.apply(variableName);
-
-            Stream<String> endingLines = org.stream().skip(position);
-
-            Stream<String> finalLines = addExtends.apply(Stream.concat(startingLines, Stream.concat(middleLines, endingLines)), className);
-
-            Files.write(Path.of(destination), finalLines.collect(Collectors.toList()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        Integer counter = 1;
+        for (Pair<Integer, String> p : tuples){
+            if (p.snd.contains("{")) {
+                counter += 1;
+            }
+            if (p.snd.contains("}")) {
+                counter -= 1;
+            }
+            if(counter == 0) {
+                return p.fst;
+            }
         }
+        return -1;
+    };
+
+    BiConsumer<Stream<Path>, Function<String, Stream<String>>> writeToFile = (ff, fss) -> {
+        ff.forEach(f ->
+        {
+            try {
+                BufferedReader objReader = new BufferedReader(new FileReader(String.valueOf(f)));
+
+                List<String> org = objReader.lines().collect(Collectors.toList());
+
+                Integer position = getInsertPosition.apply(org.stream());
+
+                List<String> startingLines = org.stream().limit(position).collect(Collectors.toList());
+
+                List<String> className = findClassName.apply(org.stream());
+                String variableName = findVariableName.apply(org.stream(), className);
+                List<String> middleLines = fss.apply(variableName).collect(Collectors.toList());
+
+                List<String> endingLines = org.stream().skip(position).collect(Collectors.toList());
+                System.out.println(f);
+                if(f.getFileName().toString().equals("Main.java")) {
+                    Files.write(Path.of(destination.concat(f.getFileName().toString())),
+                            addExtends.apply(Stream.concat(startingLines.stream(), Stream.concat(middleLines.stream(), endingLines.stream())),className)
+                                    .collect(Collectors.toList()));
+                }
+                else{
+                    Files.write(Path.of(destination.concat(f.getFileName().toString())),
+                            addExtends.apply(Stream.concat(startingLines.stream(), endingLines.stream()),className)
+                                    .collect(Collectors.toList()));
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     };
 
     @Override
@@ -165,11 +216,13 @@ public class DrawAction extends AnAction {
                                 , "\tdrawingServer.sendPostRequest(\"/query\", " + s + ".getState());"
                                 );
 
+        // getConfig -> Stream<String>
+        // List.of("main","asd") -> getConfig.get()
+        List<Path> files = findJavaFiles.apply(sourcePath,List.of("Main","asd"));
+
+        System.out.println(files);
         writeToFile.accept(
-                findJavaFiles.apply(sourcePath)
-                        .stream()
-                        .findFirst()
-                        .get()
+                files.stream()
                 , txt2insert);
 
         //executeMain.accept(findJavaFiles.apply(sourcePath), "Main");
