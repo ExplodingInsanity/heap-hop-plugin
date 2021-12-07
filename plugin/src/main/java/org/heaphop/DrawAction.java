@@ -41,12 +41,6 @@ public class DrawAction extends AnAction {
         }
     }
 
-   static class LinkedList implements Visualizer {
-        int value;
-        String nume = "Andrei";
-        LinkedList ll;
-    }
-
     private final String nameOfClass = "Main";
     private final String nameOfMethod = "main";
     private final String destination = System.getenv("TMP").concat("/heap-hop/src/main/java/");
