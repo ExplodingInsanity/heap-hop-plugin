@@ -23,11 +23,11 @@ public class DrawingServer {
         startServer(pathToServer);
         checkStatus();
 
-        System.out.println(new File(".").getAbsolutePath());
+        //System.out.println(new File(".").getAbsolutePath());
 
-        for (var path : new File("../").list()) {
-            System.out.println(path);
-        }
+//        for (var path : new File("../").list()) {
+//            System.out.println(path);
+//        }
 
         Path sourceDirectory = Paths.get(Config.pathToResources, "modelProject", "heap-hop");
         Path targetDirectory = Paths.get(System.getenv("TMP"), "heap-hop");
@@ -89,12 +89,9 @@ public class DrawingServer {
 
     public void stopServer() {
         if (process.isAlive()) {
-            try {
-                process.children().forEach(ProcessHandle::destroyForcibly);
-                Runtime.getRuntime().exec("cmd /c taskkill /PID " + process.pid() + " /F");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            process.children().forEach(ProcessHandle::destroyForcibly);
+            process.destroyForcibly();
+            //Runtime.getRuntime().exec("cmd /c taskkill /PID " + process.pid() + " /F");
         }
     }
 }

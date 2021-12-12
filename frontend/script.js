@@ -72,62 +72,29 @@ const drawArrowBetweenCanvases = (canvas, circle, firstLine) => {
     currentArrow = drawArrow(canvas, cx, (parseInt(cy) + radius).toString(), x2.toString(), y2.toString())
 }
 
-const drawCircle = (svg, prev, value, visualizer, document) => {
+const drawArrow = (svg, x1, y1, x2, y2) => {
     const svgNS = svg.namespaceURI;
-    const circle = document.createElementNS(svgNS, 'circle');
-    const text = document.createElementNS(svgNS, 'text')
+    const line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', x1)
+    line.setAttribute('y1', y1)
+    line.setAttribute('x2', x2)
+    line.setAttribute('y2', y2)
+    line.setAttribute('class', 'line')
+    svg.appendChild(line);
 
-    const tspanPosition = value.split('\n').length - 2
-
-    let nextCX, nextCY;
-
-    circle.setAttribute("visualizer", JSON.stringify(visualizer));
-
-    if (prev === undefined) {
-        nextCX = INITIAL_CX;
-        nextCY = INITIAL_CY;
-        circle.setAttribute('cx', nextCX.toString());
-        circle.setAttribute('cy', nextCY.toString());
-        text.setAttribute('x', INITIAL_CX.toString())
-        text.setAttribute('y', (INITIAL_CY - 13 * tspanPosition).toString())
-    } else {
-        nextCX = parseInt(prev.getAttribute("cx")) + INITIAL_CX
-        nextCY = parseInt(prev.getAttribute("cy"))
-        circle.setAttribute('cx', nextCX.toString())
-        circle.setAttribute('cy', nextCY.toString())
-        text.setAttribute('x', nextCX.toString())
-        text.setAttribute('y', (nextCY - 13 * tspanPosition).toString())
-    }
-    svg.setAttribute('viewBox', `0 0 ${nextCX + radius + ERROR} ${nextCY + radius + ERROR}`)
-    circle.setAttribute('r', radius.toString());
-    circle.setAttribute('class', 'circle')
-    text.setAttribute('class', 'valueText')
-    circle.setAttribute('fill', '#bc4749')
-
-    // keeping the initial values of canvas view box
-    const values = svg.getAttribute('viewBox').split(' ')
-    canvasX1 = parseInt(values[0])
-    canvasY1 = parseInt(values[1])
-    canvasX2 = parseInt(values[2])
-    canvasY2 = parseInt(values[3])
-
-    //addCircleHoverEvent(circle)
-    //addCircleClickEvent(svg, circle, visualizer, document)
-
-    let tspan
-    for (const val of value.split('\n')) {
-        tspan = document.createElementNS(svgNS, 'tspan');
-        tspan.setAttribute('x', text.getAttribute('x'))
-        tspan.setAttribute('dy', '15')
-        tspan.innerHTML = val
-        text.appendChild(tspan)
-    }
-
-    // svg.appendChild(circle);
-    return [circle, text];
+    return line
 }
 
+let canvas = document.getElementById("canvas")
+let visualizerCanvas = document.getElementById("visualizerCanvas")
 
-module.exports = {
-    drawCircle
-};
+const values = visualizerCanvas.getAttribute('viewBox').split(' ')
+canvasX1 = parseInt(values[0])
+canvasY1 = parseInt(values[1])
+canvasX2 = parseInt(values[2])
+canvasY2 = parseInt(values[3])
+
+for (circle of document.getElementsByClassName("circle")) {
+    addCircleClickEvent(canvas, circle, JSON.parse(circle.getAttribute("visualizer")), document)
+    addCircleHoverEvent(circle)
+}

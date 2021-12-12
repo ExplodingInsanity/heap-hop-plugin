@@ -62,9 +62,8 @@ const copyDir = (src, dest) => {
 };
 
 const createHtmlFile = (requestedJSON) => {
-    const OUT_PATH = "index.html"; // would be nice to get from command line
-
-    let htmlModel = fs.readFileSync("models/index.html")
+    const OUT_PATH = path.join(__dirname, "index.html"); // would be nice to get from command line
+    let htmlModel = fs.readFileSync(path.join(__dirname, "models/index.html"))
     let soup = new HtmlFileSoup(htmlModel)
     draw.drawFromJSON(requestedJSON, 0, soup.document);
     let canvas = soup.document.getElementById('canvas');

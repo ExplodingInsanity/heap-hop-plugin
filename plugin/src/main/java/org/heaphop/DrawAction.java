@@ -175,7 +175,7 @@ public class DrawAction extends AnAction {
                 List<String> middleLines = fss.apply(variableName).collect(Collectors.toList());
 
                 List<String> endingLines = org.stream().skip(position).collect(Collectors.toList());
-                System.out.println(f);
+                //System.out.println(f);
                 if(f.getFileName().toString().equals("Main.java")) {
                     Files.write(Path.of(destination.concat(f.getFileName().toString())),
                             addExtends.apply(Stream.concat(startingLines.stream(), Stream.concat(middleLines.stream(), endingLines.stream())),className)
@@ -214,7 +214,7 @@ public class DrawAction extends AnAction {
         // List.of("main","asd") -> getConfig.get()
         List<Path> files = findJavaFiles.apply(sourcePath,List.of("Main","asd"));
 
-        System.out.println(files);
+        //System.out.println(files);
         writeToFile.accept(
                 files.stream()
                 , txt2insert);
@@ -238,10 +238,12 @@ public class DrawAction extends AnAction {
             synchronized (pr) {
                 pr.waitFor();
             }
-
+            if (null != SharedData.getInstance().webViewerWindow) {
+                SharedData.getInstance().webViewerWindow.updateContent(Config.pathToIndexHtmlFile);
+            }
             Runtime.getRuntime().exec(String.format(
                     "cmd /c start chrome %s",
-                    Paths.get(System.getenv("TMP"), "heap-hop", "website", "index.html")));
+                    Config.pathToIndexHtmlFile));
         } catch (InterruptedException | IOException interruptedException) {
             interruptedException.printStackTrace();
         }
