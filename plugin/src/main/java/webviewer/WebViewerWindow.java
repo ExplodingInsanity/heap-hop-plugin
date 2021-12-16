@@ -5,6 +5,7 @@ import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.jcef.JBCefApp;
 import com.intellij.ui.jcef.JBCefBrowser;
 import org.cef.CefApp;
+import org.heaphop.Config;
 import org.heaphop.SharedData;
 
 import javax.swing.*;
@@ -34,7 +35,7 @@ public class WebViewerWindow {
 
         registerAppSchemeHandler();
 //        Path tmp = Paths.get(System.getenv("TMP"), "heap-hop", "index.html");
-//        webView.loadURL(tmp.toString());
+        webView.loadURL(Config.pathToIndexHtmlFile);
         Disposer.register(project, webView);
     }
 

@@ -39,13 +39,13 @@ const drawNode = (value, location, isLast) => {
 // once we find an atom we can place it in the localAtoms dictionary
 // put all of them into the atoms array
 // visualizer = another data structure; atom = simple data type (int, string etc)
-const visualizers = []
+//const visualizers = []
 let id = 0
 
-const drawFromJSON = (requestedJSON, id) => {
+const drawFromJSON = (requestedJSON, id, document, soup) => {
     let hasChildren;
     const keys = Object.keys(requestedJSON);
-    visualizers.push({
+    soup.visualizers.push({
         'id': id,
         'dictionary': [],
         'list': [],
@@ -54,11 +54,11 @@ const drawFromJSON = (requestedJSON, id) => {
     for (const key of keys) {
         if (key !== 'type') {
             if (requestedJSON[key]['type'] === 'visualizer') {
-                hasChildren = drawFromJSON(requestedJSON[key]['value'], id + 1)
+                hasChildren = drawFromJSON(requestedJSON[key]['value'], id + 1, document, soup)
             } else {
                 const type = requestedJSON[key]['type']
 
-                const visualizer = visualizers.filter(x => x['id'] === id)[0]
+                const visualizer = soup.visualizers.filter(x => x['id'] === id)[0]
                 if (type !== undefined) {
                     if (requestedJSON[key]['type'] === 'atom') {
                         visualizer[type] += key + ": " + requestedJSON[key]['value'] + '\n'
@@ -77,7 +77,7 @@ const drawFromJSON = (requestedJSON, id) => {
 
 // For each atom found we draw a new circle
 // in reverse order because we computed it recursively in drawFromJSON
-const drawFromAtoms = (canvas, document) => {
+const drawFromAtoms = (canvas, document, soup) => {
     const elements = []
     let nextCircle = []
 
@@ -92,7 +92,7 @@ const drawFromAtoms = (canvas, document) => {
     svg.setAttribute('class', 'canvas')
     canvas.appendChild(svg);
 
-    visualizers.slice(0).map((x, index) => {
+    soup.visualizers.slice(0).map((x, index) => {
         const currentPrev = nextCircle[0]
         nextCircle = circle.drawCircle(svg, currentPrev, x['atom'], x, document)
         elements.push(nextCircle)

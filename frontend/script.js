@@ -94,7 +94,8 @@ canvasY1 = parseInt(values[1])
 canvasX2 = parseInt(values[2])
 canvasY2 = parseInt(values[3])
 
+
 for (circle of document.getElementsByClassName("circle")) {
-    addCircleClickEvent(canvas, circle, JSON.parse(circle.getAttribute("visualizer")), document)
+    addCircleClickEvent(visualizerCanvas, circle, JSON.parse(circle.getAttribute("visualizer")), document)
     addCircleHoverEvent(circle)
 }
