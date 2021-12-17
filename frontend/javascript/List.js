@@ -8,6 +8,8 @@ const drawList = (svg, listArray, circle) => {
     let x = parseInt(circle.getAttribute('cx')) - listItemWidth / 2
     let y = 0
 
+    console.log(listArray)
+
     listArray[0].forEach(entry => {
         // create node
         const currentRect = drawRect(svg, x, y, listItemWidth, listItemHeight, entry['value'].toString())
@@ -19,6 +21,7 @@ const drawList = (svg, listArray, circle) => {
         x += listItemWidth + 1
         elements.push(currentRect)
     })
+
     elements.forEach(element => {
         svg.appendChild(element[0]);
         svg.appendChild(element[1])

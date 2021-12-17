@@ -6,6 +6,10 @@ const INITIAL_CY = 200
 let currentArrow = null
 let canvasX1, canvasY1, canvasX2, canvasY2;
 
+const isObjEmpty = obj => {
+    return Object.keys(obj).length === 0
+}
+
 const addCircleHoverEvent = (circle) => {
     circle.addEventListener('mouseover', () => {
         circle.setAttribute('fill', '#52b788')
@@ -15,50 +19,90 @@ const addCircleHoverEvent = (circle) => {
     })
 }
 
+const computeOtherStructures = () => {
+    let svg = document.getElementById('detailCanvas')
+    if (svg !== null) {
+        canvas.removeChild(svg)
+    }
+    if (currentArrow !== null) {
+        canvas.removeChild(currentArrow)
+        currentArrow = null
+    }
+
+    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute('id', 'detailCanvas')
+    svg.setAttribute('width', '100%')
+    svg.setAttribute('class', 'canvas')
+    svg.setAttribute('y', `${canvasY2 + radius}`)
+    canvas.appendChild(svg);
+
+    let firstLine = []
+
+    for (const drawable of Object.entries(visualizer)) {
+        console.log(drawable);
+        if (drawable[0] === 'dictionary' && Object.keys(drawable[1]).length !== 0) {
+            firstLine = drawDictionary(svg, drawable[1], circle);
+
+            const maxX2 = Math.max(canvasX2, firstLine[1] + ERROR)
+            const maxY2 = Math.max(canvasY2, firstLine[2] + ERROR)
+
+            if (maxX2 !== canvasX2 || maxY2 !== canvasY2) {
+                canvas.setAttribute('viewBox',
+                    `${canvasX1} ${canvasY1} ${maxX2.toString()} ${maxY2.toString()}`)
+            }
+
+            drawArrowBetweenCanvases(canvas, circle, firstLine[0])
+        }
+        if (drawable[0] === 'list' && Object.keys(drawable[1]).length !== 0) {
+            firstLine = drawList(svg, drawable[1], circle)
+            const maxX2 = firstLine[1] + ERROR
+            if (maxX2 > parseInt(canvasX2)) {
+                canvas.setAttribute('viewBox',
+                    `${canvasX1} ${canvasY1} ${maxX2.toString()} ${canvasY2}`)
+            }
+            drawArrowBetweenCanvases(canvas, circle, firstLine[0])
+        }
+    }
+}
+
+const getTextForKey = (key, info) => {
+    let returnedText = ''
+    switch (key) {
+        case 'atom':
+            console.log(key, info[key])
+            returnedText += `${info[key]}\n`
+            break;
+        case 'id':
+            returnedText += `id: ${info[key]}\n`
+            break
+        default:
+            if (!isObjEmpty(info[key])) {
+                for (let list in info[key]) {
+                    returnedText += `${list}: ${key}\n`
+                }
+            }
+    }
+    return returnedText
+}
+
+const openModal = (element, modal, modalBody) => {
+    if (modal == null) return;
+    const info = JSON.parse(element.getAttribute('visualizer'))
+    modalBody.innerText = ''
+    for (let key in info) {
+        modalBody.innerText += getTextForKey(key, info)
+    }
+    modal.classList.add('active')
+}
+
 const addCircleClickEvent = (canvas, circle, visualizer, document) => {
     circle.addEventListener('click', (e) => {
-        let svg = document.getElementById('detailCanvas')
-        if (svg !== null) {
-            canvas.removeChild(svg)
-        }
-        if (currentArrow !== null) {
-            canvas.removeChild(currentArrow)
-            currentArrow = null
-        }
+        // open information modal tab
+        const modal = document.getElementById('modal');
+        const modalBody = document.getElementsByClassName('modal-body')
+        openModal(circle, modal, modalBody[0]);
 
-        svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute('id', 'detailCanvas')
-        svg.setAttribute('width', '100%')
-        svg.setAttribute('class', 'canvas')
-        svg.setAttribute('y', `${canvasY2 + radius}`)
-        canvas.appendChild(svg);
 
-        let firstLine = []
-
-        for (const drawable of Object.entries(visualizer)) {
-            if (drawable[0] === 'dictionary' && drawable[1].length !== 0) {
-                firstLine = drawDictionary(svg, drawable[1], circle);
-
-                const maxX2 = Math.max(canvasX2, firstLine[1] + ERROR)
-                const maxY2 = Math.max(canvasY2, firstLine[2] + ERROR)
-
-                if (maxX2 !== canvasX2 || maxY2 !== canvasY2) {
-                    canvas.setAttribute('viewBox',
-                        `${canvasX1} ${canvasY1} ${maxX2.toString()} ${maxY2.toString()}`)
-                }
-
-                drawArrowBetweenCanvases(canvas, circle, firstLine[0])
-            }
-            if (drawable[0] === 'list' && drawable[1].length !== 0) {
-                firstLine = drawList(svg, drawable[1], circle)
-                const maxX2 = firstLine[1] + ERROR
-                if (maxX2 > parseInt(canvasX2)) {
-                    canvas.setAttribute('viewBox',
-                        `${canvasX1} ${canvasY1} ${maxX2.toString()} ${canvasY2}`)
-                }
-                drawArrowBetweenCanvases(canvas, circle, firstLine[0])
-            }
-        }
     })
 }
 
@@ -95,7 +139,7 @@ canvasX2 = parseInt(values[2])
 canvasY2 = parseInt(values[3])
 
 
-for (circle of document.getElementsByClassName("circle")) {
+for (let circle of document.getElementsByClassName("circle")) {
     addCircleClickEvent(visualizerCanvas, circle, JSON.parse(circle.getAttribute("visualizer")), document)
     addCircleHoverEvent(circle)
 }

@@ -62,6 +62,7 @@ const copyDir = (src, dest) => {
 };
 
 const createHtmlFile = (requestedJSON) => {
+    // console.log(JSON.stringify(requestedJSON))
     const OUT_PATH = path.join(__dirname, "index.html"); // would be nice to get from command line
     let htmlModel = fs.readFileSync(path.join(__dirname, "models/index.html"))
     let soup = new HtmlFileSoup(htmlModel)

@@ -101,9 +101,9 @@ const drawCircle = (svg, prev, value, visualizer, document) => {
     svg.setAttribute('viewBox', `0 0 ${nextCX + radius + ERROR} ${nextCY + radius + ERROR}`)
     circle.setAttribute('r', radius.toString());
     circle.setAttribute('class', 'circle')
-    text.setAttribute('class', 'valueText')
     circle.setAttribute('fill', '#bc4749')
 
+    text.setAttribute('class', 'valueText')
     // keeping the initial values of canvas view box
     const values = svg.getAttribute('viewBox').split(' ')
     canvasX1 = parseInt(values[0])
