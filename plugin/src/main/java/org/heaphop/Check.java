@@ -15,6 +15,11 @@ public class Check extends AnAction {
             SharedData.getInstance().project = e.getProject();
         }
 
-        SharedData.getInstance().drawingServer.checkStatus();
+        if (SharedData.getInstance().drawingServer == null) {
+            Notifier.notifyInformation("The server is stopped!");
+        }
+        else {
+            SharedData.getInstance().drawingServer.checkStatus();
+        }
     }
 }

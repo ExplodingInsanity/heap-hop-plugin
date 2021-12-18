@@ -16,7 +16,7 @@ public class StopServerAction extends AnAction {
         }
 
         DrawingServer drawingServer = SharedData.getInstance().drawingServer;
-        if (drawingServer == null) {
+        if (drawingServer == null || !DrawingServer.process.isAlive()) {
             Notifier.notifyError("The server is stopped!");
         } else {
             drawingServer.stopServer();

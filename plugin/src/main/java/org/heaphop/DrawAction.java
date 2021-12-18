@@ -214,7 +214,7 @@ public class DrawAction extends AnAction {
                 SharedData.getInstance().project = project;
             }
             if (DrawingServer.process == null || !DrawingServer.process.isAlive()) {
-                throw new ConnectException("Server is stopped!");
+                throw new ConnectException("The server is stopped!");
             }
 
             configPath = Paths.get(project.getBasePath(), "heap_hop.config").toString();

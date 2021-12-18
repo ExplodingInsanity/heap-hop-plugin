@@ -32,6 +32,9 @@ public class DrawingServer {
 
     private static void startServer(String pathToServer) {
         try {
+            if (process != null && process.isAlive()) {
+                throw new ConnectException("The server is already started!");
+            }
             if (process == null || !process.isAlive()) {
                 process = Runtime.getRuntime().exec(String.format("cmd /c node %s", pathToServer));
 //                process = Runtime.getRuntime().exec(String.format("cmd /c cat %s", pathToServer));
@@ -46,14 +49,14 @@ public class DrawingServer {
                     String result = s.hasNext() ? s.next() : "";
                     if (!result.isEmpty()) {
                         if (result.contains("already in use")) {
-                            throw new ConnectException("The server is already started!");
+                            throw new ConnectException("The server is already started by another process!");
                         }
                         else {
                             throw new ConnectException("Couldn't start the server!");
                         }
                     }
                 }
-                throw new ConnectException("Server has stopped unexpectedly!");
+                throw new ConnectException("The server has stopped unexpectedly!");
             }
 
 
@@ -99,11 +102,11 @@ public class DrawingServer {
     }
 
     public void checkStatus() {
-        if (DrawingServer.process.isAlive()) {
-            Notifier.notifyInformation("The server is started with PID " + DrawingServer.process.pid());
+        if (process.isAlive()) {
+            Notifier.notifyInformation("The server is started with PID " + process.pid());
         } else {
             try {
-                Notifier.notifyInformation("The server is stopped with exit code " + DrawingServer.process.exitValue());
+                Notifier.notifyInformation("The server is stopped with exit code " + process.exitValue());
             } catch (Exception ignored) {
             }
         }
