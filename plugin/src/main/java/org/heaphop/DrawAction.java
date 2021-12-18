@@ -12,6 +12,7 @@ import com.google.common.collect.Streams;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -204,29 +205,34 @@ public class DrawAction extends AnAction {
 
     @Override
     public synchronized void actionPerformed(@NotNull AnActionEvent e) {
-        if (e.getProject() == null) {
-            return;
-        }
-        Project project  = e.getProject();
-        if (project == null) {
-            return;
-        }
-        configPath = Paths.get(project.getBasePath(), "heap_hop.config").toString();
-        String pathToSource = project.getBasePath().concat("/src/"); // Path to the main folder of the user's project
-        String pathToDestination = System.getenv("TMP").concat("/heap-hop/src/main/java/");
-        this.createAndCopyDir(pathToDestination, pathToSource);
-
-        Function<String, Stream<String>> txt2insert = s ->
-                Stream.of
-                        ( "\t\tDrawingServer drawingServer = new DrawingServer(\"http://localhost:24564\""
-                                        + ", \"" + Config.pathToNodeServer + "\");"
-                                , "\t\tdrawingServer.sendPostRequest(\"/query\", " + s + ".getState());"
-                                );
-
-        // getConfig -> Stream<String>
-        // List.of("main","asd") -> getConfig.get()
-        getConfig.get().forEach(System.out::println);
         try {
+            Project project  = e.getProject();
+            if (project == null) {
+                return;
+            }
+            if (SharedData.getInstance().project == null) {
+                SharedData.getInstance().project = project;
+            }
+            if (DrawingServer.process == null || !DrawingServer.process.isAlive()) {
+                throw new ConnectException("Server is stopped!");
+            }
+
+            configPath = Paths.get(project.getBasePath(), "heap_hop.config").toString();
+            String pathToSource = project.getBasePath().concat("/src/"); // Path to the main folder of the user's project
+            String pathToDestination = System.getenv("TMP").concat("/heap-hop/src/main/java/");
+            this.createAndCopyDir(pathToDestination, pathToSource);
+
+            Function<String, Stream<String>> txt2insert = s ->
+                    Stream.of
+                            ( "\t\tDrawingServer drawingServer = new DrawingServer(\"http://localhost:24564\""
+                                            + ", \"" + Config.pathToNodeServer + "\");"
+                                    , "\t\tdrawingServer.sendPostRequest(\"/query\", " + s + ".getState());"
+                                    );
+
+            // getConfig -> Stream<String>
+            // List.of("main","asd") -> getConfig.get()
+            getConfig.get().forEach(System.out::println);
+
             List<Path> files = findJavaFiles.apply(sourcePath, getConfig.get().collect(Collectors.toList()));
 
             //System.out.println(files);
@@ -250,6 +256,15 @@ public class DrawAction extends AnAction {
             System.out.println(result);
 
             pr.waitFor();
+            if (pr.exitValue() != 0) {
+                if (pr.getErrorStream().available() > 0) {
+                    s = new Scanner(pr.getErrorStream()).useDelimiter("\\A");
+                    result = s.hasNext() ? s.next() : "";
+                }
+                if (!result.isEmpty()) {
+                    throw new InterruptedException();
+                }
+            }
 
             if (null != SharedData.getInstance().webViewerWindow) {
                 SharedData.getInstance().webViewerWindow.updateContent(Config.pathToIndexHtmlFile);
@@ -258,9 +273,12 @@ public class DrawAction extends AnAction {
 //            Runtime.getRuntime().exec(String.format(
 //                    "cmd /c start chrome %s",
 //                    Config.pathToIndexHtmlFile));
-        } catch (InterruptedException | IOException interruptedException) {
+        } catch (ConnectException ex) {
+            Notifier.notifyError(ex.getMessage());
+            ex.printStackTrace();
+        } catch (InterruptedException | IOException ex) {
             Notifier.notifyError("Couldn't build gradle!");
-            interruptedException.printStackTrace();
+            ex.printStackTrace();
         }
     }
 }

@@ -16,7 +16,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class DrawingServer {
-    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
     public static Process process;
     private final String baseURI;
 
@@ -54,6 +53,7 @@ public class DrawingServer {
                         }
                     }
                 }
+                throw new ConnectException("Server has stopped unexpectedly!");
             }
 
 
