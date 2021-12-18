@@ -18,10 +18,7 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-import java.util.Scanner;
+import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -34,24 +31,28 @@ public class DrawAction extends AnAction {
         new File(destP).mkdirs();
         File source = new File(sourceP);
         File dest = new File(destP);
-        try {
-            FileUtils.copyDirectory(source, dest);
-        } catch (IOException e) {
-            e.printStackTrace();
+        while (true) {
+            try {
+                FileUtils.copyDirectory(source, dest);
+                System.out.println("Copied user's files");
+                break;
+            } catch (IOException e) {
+                try {
+                    System.out.println("Sleeping while the file is locked");
+                    Thread.sleep(500);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+                //e.printStackTrace();
+            }
         }
-    }
-
-   static class LinkedList implements Visualizer {
-        int value;
-        String nume = "Andrei";
-        LinkedList ll;
     }
 
     private final String nameOfClass = "Main";
     private final String nameOfMethod = "main";
     private final String destination = System.getenv("TMP").concat("/heap-hop/src/main/java/");
     private final String sourcePath = System.getenv("TMP").concat("/heap-hop/src/main/java/");
-    private final String configPath = "......../app.properties";
+    private String configPath = null;
     // example file :
     // classes = Main,asd
 
@@ -98,7 +99,7 @@ public class DrawAction extends AnAction {
     };
 
     Function<Stream<String>, List<String>> findClassName = ss ->
-            ss.filter(s -> s.contains("static class"))
+            ss.filter(s -> s.contains("class"))
                     .map(s -> Arrays.stream(s.split(" "))
                             .dropWhile(sp -> !sp.equals("class"))
                             .skip(1)
@@ -107,9 +108,9 @@ public class DrawAction extends AnAction {
 
     BiFunction<Stream<String>, List<String>, Stream<String>> addExtends = (ss, cls) ->
             ss.map(s -> {
-                if (s.contains("static class")){
+                if (s.contains("class")){
                     return Arrays.stream(s.split(" ")).map(w -> {
-                        if (cls.stream().anyMatch(w::equals)) {
+                        if (cls.stream().anyMatch(w::equals) && !w.contains("Main")) {
                             return w + " implements Visualizer";
                         }else{
                             return w;
@@ -165,6 +166,7 @@ public class DrawAction extends AnAction {
     };
 
     BiConsumer<Stream<Path>, Function<String, Stream<String>>> writeToFile = (ff, fss) -> {
+        List<String> className = getConfig.get().filter(x -> !x.equals("Main")).collect(Collectors.toList());
         ff.forEach(f ->
         {
             try {
@@ -174,15 +176,15 @@ public class DrawAction extends AnAction {
 
                 Integer position = getInsertPosition.apply(org.stream());
 
-                List<String> startingLines = org.stream().limit(position).collect(Collectors.toList());
+                List<String> startingLines = position == -1 ? new ArrayList<>() : org.stream().limit(position).collect(Collectors.toList());
 
-                List<String> className = findClassName.apply(org.stream());
-                String variableName = findVariableName.apply(org.stream(), className);
-                List<String> middleLines = fss.apply(variableName).collect(Collectors.toList());
+                //List<String> className = findClassName.apply(org.stream());
 
-                List<String> endingLines = org.stream().skip(position).collect(Collectors.toList());
-                System.out.println(f);
+                List<String> endingLines = org.stream().skip(Math.max(0, position)).collect(Collectors.toList());
+                //System.out.println(f);
                 if(f.getFileName().toString().equals("Main.java")) {
+                    String variableName = findVariableName.apply(org.stream(), className);
+                    List<String> middleLines = fss.apply(variableName).collect(Collectors.toList());
                     Files.write(Path.of(destination.concat(f.getFileName().toString())),
                             addExtends.apply(Stream.concat(startingLines.stream(), Stream.concat(middleLines.stream(), endingLines.stream())),className)
                                     .collect(Collectors.toList()));
@@ -200,11 +202,12 @@ public class DrawAction extends AnAction {
     };
 
     @Override
-    public void actionPerformed(@NotNull AnActionEvent e) {
+    public synchronized void actionPerformed(@NotNull AnActionEvent e) {
         Project project  = e.getProject();
         if (project == null) {
             return;
         }
+        configPath = Paths.get(project.getBasePath(), "heap_hop.config").toString();
         String pathToSource = project.getBasePath().concat("/src/"); // Path to the main folder of the user's project
         String pathToDestination = System.getenv("TMP").concat("/heap-hop/src/main/java/");
         this.createAndCopyDir(pathToDestination, pathToSource);
@@ -213,14 +216,15 @@ public class DrawAction extends AnAction {
                 Stream.of
                         ( "\t\tDrawingServer drawingServer = new DrawingServer(\"http://localhost:24564\""
                                         + ", \"" + Config.pathToNodeServer + "\");"
-                                , "\tdrawingServer.sendPostRequest(\"/query\", " + s + ".getState());"
+                                , "\t\tdrawingServer.sendPostRequest(\"/query\", " + s + ".getState());"
                                 );
 
         // getConfig -> Stream<String>
         // List.of("main","asd") -> getConfig.get()
-        List<Path> files = findJavaFiles.apply(sourcePath,List.of("Main","asd"));
+        getConfig.get().forEach(System.out::println);
+        List<Path> files = findJavaFiles.apply(sourcePath, getConfig.get().collect(Collectors.toList()));
 
-        System.out.println(files);
+        //System.out.println(files);
         writeToFile.accept(
                 files.stream()
                 , txt2insert);
@@ -241,13 +245,14 @@ public class DrawAction extends AnAction {
             result = s.hasNext() ? s.next() : "";
             System.out.println(result);
 
-            synchronized (pr) {
-                pr.waitFor();
-            }
+            pr.waitFor();
 
+            if (null != SharedData.getInstance().webViewerWindow) {
+                SharedData.getInstance().webViewerWindow.updateContent(Config.pathToIndexHtmlFile);
+            }
             Runtime.getRuntime().exec(String.format(
                     "cmd /c start chrome %s",
-                    Paths.get(System.getenv("TMP"), "heap-hop", "website", "index.html")));
+                    Config.pathToIndexHtmlFile));
         } catch (InterruptedException | IOException interruptedException) {
             interruptedException.printStackTrace();
         }

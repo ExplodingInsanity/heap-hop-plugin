@@ -69,7 +69,7 @@ const drawArrowBetweenCanvases = (canvas, circle, firstLine) => {
     const x2 = (firstLine[0] + firstLine[2]) / 2
     const y2 = (firstLine[1] + firstLine[3]) / 2 + INITIAL_CX + radius * 2 + ERROR
 
-    currentArrow = drawArrow(canvas, cx, (parseInt(cy) + radius).toString(), x2.toString(), y2.toString())
+    currentArrow = drawArrow(canvas, cx, (parseInt(cy) + radius).toString(), x2.toString(), y2.toString(), "")
 }
 
 const drawCircle = (svg, prev, value, visualizer, document) => {
@@ -80,6 +80,8 @@ const drawCircle = (svg, prev, value, visualizer, document) => {
     const tspanPosition = value.split('\n').length - 2
 
     let nextCX, nextCY;
+
+    circle.setAttribute("visualizer", JSON.stringify(visualizer));
 
     if (prev === undefined) {
         nextCX = INITIAL_CX;
@@ -99,9 +101,9 @@ const drawCircle = (svg, prev, value, visualizer, document) => {
     svg.setAttribute('viewBox', `0 0 ${nextCX + radius + ERROR} ${nextCY + radius + ERROR}`)
     circle.setAttribute('r', radius.toString());
     circle.setAttribute('class', 'circle')
-    text.setAttribute('class', 'valueText')
     circle.setAttribute('fill', '#bc4749')
 
+    text.setAttribute('class', 'valueText')
     // keeping the initial values of canvas view box
     const values = svg.getAttribute('viewBox').split(' ')
     canvasX1 = parseInt(values[0])
@@ -109,8 +111,8 @@ const drawCircle = (svg, prev, value, visualizer, document) => {
     canvasX2 = parseInt(values[2])
     canvasY2 = parseInt(values[3])
 
-    addCircleHoverEvent(circle)
-    addCircleClickEvent(svg, circle, visualizer, document)
+    //addCircleHoverEvent(circle)
+    //addCircleClickEvent(svg, circle, visualizer, document)
 
     let tspan
     for (const val of value.split('\n')) {

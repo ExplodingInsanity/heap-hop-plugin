@@ -62,13 +62,13 @@ const copyDir = (src, dest) => {
 };
 
 const createHtmlFile = (requestedJSON) => {
-    const OUT_PATH = "index.html"; // would be nice to get from command line
-
-    let htmlModel = fs.readFileSync("models/index.html")
+    // console.log(JSON.stringify(requestedJSON))
+    const OUT_PATH = path.join(__dirname, "index.html"); // would be nice to get from command line
+    let htmlModel = fs.readFileSync(path.join(__dirname, "models/index.html"))
     let soup = new HtmlFileSoup(htmlModel)
-    draw.drawFromJSON(requestedJSON, 0, soup.document);
+    draw.drawFromJSON(requestedJSON, 0, soup.document, soup);
     let canvas = soup.document.getElementById('canvas');
-    draw.drawFromAtoms(canvas, soup.document);
+    draw.drawFromAtoms(canvas, soup.document, soup);
     fs.writeFileSync(OUT_PATH, soup.document.getElementsByTagName('html')[0].outerHTML)
     return path.resolve(OUT_PATH)
 }

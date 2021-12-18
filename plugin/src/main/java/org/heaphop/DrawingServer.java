@@ -1,5 +1,6 @@
 package org.heaphop;
 
+import com.intellij.openapi.util.io.FileUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -8,7 +9,9 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.*;
 import java.util.Scanner;
 
 public class DrawingServer {
@@ -19,6 +22,20 @@ public class DrawingServer {
         this.baseURI = baseURI;
         startServer(pathToServer);
         checkStatus();
+
+        //System.out.println(new File(".").getAbsolutePath());
+
+//        for (var path : new File("../").list()) {
+//            System.out.println(path);
+//        }
+
+        Path sourceDirectory = Paths.get(Config.pathToResources, "modelProject", "heap-hop");
+        Path targetDirectory = Paths.get(System.getenv("TMP"), "heap-hop");
+        try {
+            FileUtil.copyDir(sourceDirectory.toFile(), targetDirectory.toFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String sendPostRequest(String URI, JSONObject json) {
@@ -72,12 +89,9 @@ public class DrawingServer {
 
     public void stopServer() {
         if (process.isAlive()) {
-            try {
-                process.children().forEach(ProcessHandle::destroyForcibly);
-                Runtime.getRuntime().exec("cmd /c taskkill /PID " + process.pid() + " /F");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            process.children().forEach(ProcessHandle::destroyForcibly);
+            process.destroyForcibly();
+            //Runtime.getRuntime().exec("cmd /c taskkill /PID " + process.pid() + " /F");
         }
     }
 }

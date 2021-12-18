@@ -8,6 +8,7 @@ const drawRect = (svg, x, y, width, height, value) => {
     rect.setAttribute('width', width.toString());
     rect.setAttribute('height', height.toString());
     rect.setAttribute('class', 'rect');
+    rect.setAttribute('fill', normalCircleColor[rect.getAttribute('class')])
 
     text.setAttribute('x', (x + width / 2).toString())
     text.setAttribute('y', (y + height / 2).toString())
