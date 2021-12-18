@@ -1,6 +1,5 @@
 package org.heaphop;
 
-import com.intellij.openapi.util.io.FileUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -9,32 +8,71 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
+import java.net.ConnectException;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class DrawingServer {
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
     public static Process process;
     private final String baseURI;
 
     public DrawingServer(String baseURI, String pathToServer) {
         this.baseURI = baseURI;
         startServer(pathToServer);
-        checkStatus();
 
         //System.out.println(new File(".").getAbsolutePath());
 
 //        for (var path : new File("../").list()) {
 //            System.out.println(path);
 //        }
+    }
 
-        Path sourceDirectory = Paths.get(Config.pathToResources, "modelProject", "heap-hop");
-        Path targetDirectory = Paths.get(System.getenv("TMP"), "heap-hop");
+    private static void startServer(String pathToServer) {
         try {
-            FileUtil.copyDir(sourceDirectory.toFile(), targetDirectory.toFile());
-        } catch (IOException e) {
+            if (process == null || !process.isAlive()) {
+                process = Runtime.getRuntime().exec(String.format("cmd /c node %s", pathToServer));
+//                process = Runtime.getRuntime().exec(String.format("cmd /c cat %s", pathToServer));
+            }
+
+            process.waitFor(2, TimeUnit.SECONDS);
+
+            System.out.println(process.isAlive());
+            if (!process.isAlive()) {
+                if (process.getErrorStream().available() > 0) {
+                    Scanner s = new Scanner(process.getErrorStream()).useDelimiter("\\A");
+                    String result = s.hasNext() ? s.next() : "";
+                    if (!result.isEmpty()) {
+                        if (result.contains("already in use")) {
+                            throw new ConnectException("The server is already started!");
+                        }
+                        else {
+                            throw new ConnectException("Couldn't start the server!");
+                        }
+                    }
+                }
+            }
+
+
+//            s = new Scanner(process.getInputStream()).useDelimiter("\\A");
+//            result = s.hasNext() ? s.next() : "";
+//            System.out.println(result);
+
+            Notifier.notifyInformation("The server has been started!");
+        } catch (ConnectException e) {
+            Notifier.notifyError(e.getMessage());
             e.printStackTrace();
+        } catch (IOException e) {
+            Notifier.notifyError("I/O error when starting the server.");
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            Notifier.notifyError("You don't have permission to start the server.");
+            e.printStackTrace();
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
         }
     }
 
@@ -60,38 +98,23 @@ public class DrawingServer {
         return null;
     }
 
-    private static void startServer(String pathToServer) {
-        try {
-            if (process == null || !process.isAlive()) {
-                process = Runtime.getRuntime().exec(String.format("cmd /c node %s", pathToServer));
-//                process = Runtime.getRuntime().exec(String.format("cmd /c cat %s", pathToServer));
+    public void checkStatus() {
+        if (DrawingServer.process.isAlive()) {
+            Notifier.notifyInformation("The server is started with PID " + DrawingServer.process.pid());
+        } else {
+            try {
+                Notifier.notifyInformation("The server is stopped with exit code " + DrawingServer.process.exitValue());
+            } catch (Exception ignored) {
             }
-//            Scanner s = new Scanner(process.getInputStream()).useDelimiter("\\A");
-//            String result = s.hasNext() ? s.next() : "";
-//            System.out.println(result);
-//
-//            s = new Scanner(process.getErrorStream()).useDelimiter("\\A");
-//            result = s.hasNext() ? s.next() : "";
-//            System.out.println(result);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
-
-    public void checkStatus() {
-        System.out.println(DrawingServer.process.isAlive());
-        System.out.println(DrawingServer.process.info());
-        System.out.println(DrawingServer.process.pid());
-        try {
-            System.out.println(DrawingServer.process.exitValue());
-        } catch (Exception ignored) {
-    }}
 
     public void stopServer() {
         if (process.isAlive()) {
             process.children().forEach(ProcessHandle::destroyForcibly);
             process.destroyForcibly();
             //Runtime.getRuntime().exec("cmd /c taskkill /PID " + process.pid() + " /F");
+            Notifier.notifyInformation("The server has been stopped!");
         }
     }
 }

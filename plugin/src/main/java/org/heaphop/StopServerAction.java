@@ -8,6 +8,13 @@ public class StopServerAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
+        if (e.getProject() == null) {
+            return;
+        }
+        if (SharedData.getInstance().project == null) {
+            SharedData.getInstance().project = e.getProject();
+        }
+
         SharedData.getInstance().drawingServer.stopServer();
     }
 }

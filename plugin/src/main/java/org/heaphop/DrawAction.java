@@ -197,12 +197,16 @@ public class DrawAction extends AnAction {
 
             } catch (IOException e) {
                 e.printStackTrace();
+                throw new RuntimeException(e);
             }
         });
     };
 
     @Override
     public synchronized void actionPerformed(@NotNull AnActionEvent e) {
+        if (e.getProject() == null) {
+            return;
+        }
         Project project  = e.getProject();
         if (project == null) {
             return;
@@ -222,15 +226,15 @@ public class DrawAction extends AnAction {
         // getConfig -> Stream<String>
         // List.of("main","asd") -> getConfig.get()
         getConfig.get().forEach(System.out::println);
-        List<Path> files = findJavaFiles.apply(sourcePath, getConfig.get().collect(Collectors.toList()));
-
-        //System.out.println(files);
-        writeToFile.accept(
-                files.stream()
-                , txt2insert);
-
-        //executeMain.accept(findJavaFiles.apply(sourcePath), "Main");
         try {
+            List<Path> files = findJavaFiles.apply(sourcePath, getConfig.get().collect(Collectors.toList()));
+
+            //System.out.println(files);
+            writeToFile.accept(
+                    files.stream()
+                    , txt2insert);
+
+            //executeMain.accept(findJavaFiles.apply(sourcePath), "Main");
             Process pr = Runtime.getRuntime().exec(String.format(
                 "cmd /c %s -p %s run",
                 Paths.get(System.getenv("TMP"), "heap-hop", "gradlew.bat"),
@@ -250,10 +254,12 @@ public class DrawAction extends AnAction {
             if (null != SharedData.getInstance().webViewerWindow) {
                 SharedData.getInstance().webViewerWindow.updateContent(Config.pathToIndexHtmlFile);
             }
-            Runtime.getRuntime().exec(String.format(
-                    "cmd /c start chrome %s",
-                    Config.pathToIndexHtmlFile));
+            Notifier.notifyInformation("Drawn content.");
+//            Runtime.getRuntime().exec(String.format(
+//                    "cmd /c start chrome %s",
+//                    Config.pathToIndexHtmlFile));
         } catch (InterruptedException | IOException interruptedException) {
+            Notifier.notifyError("Couldn't build gradle!");
             interruptedException.printStackTrace();
         }
     }
