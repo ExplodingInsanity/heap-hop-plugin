@@ -18,9 +18,9 @@ const drawDictionary = (svg, dictionaryArray, circle, canvas, depth) => {
 
     dictionaryArray.forEach(entry => {
         // create key node
-        currentKeyRect = drawRect(svg, x, y, width, height, `key: ${entry['key']['value']}`)
+        currentKeyRect = drawRect(svg, x, y, width, height, `key: ${transformTextRect(entry['key']['value'])}`)
         // create value node
-        currentValueRect = drawRect(svg, x + KEY_VALUE_DISTANCE, y, width, height, `value: ${entry['value']['value']}`)
+        currentValueRect = drawRect(svg, x + KEY_VALUE_DISTANCE, y, width, height, `value: ${transformTextRect(entry['value']['value'])}`)
         // currentValueRect[0].addEventListener("click", (e) => {
         //     drawOtherStructures(entry["value"]["value"], this, canvas, depth + 1)
         // })

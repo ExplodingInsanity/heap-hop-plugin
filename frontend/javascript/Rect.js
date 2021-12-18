@@ -25,3 +25,7 @@ const drawRect = (svg, x, y, width, height, value) => {
 
     return [rect, text]
 }
+
+const transformTextRect = (data) => {
+    return typeof(data) == "string" || typeof(data) == "number" ? data : "[visualizer]"
+}

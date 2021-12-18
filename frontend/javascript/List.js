@@ -17,7 +17,7 @@ const drawList = (svg, listArray, circle, canvas, depth) => {
 
     listArray.forEach(entry => {
         // create node
-        const currentRect = drawRect(svg, x, y, listItemWidth, listItemHeight, entry['value'].toString())
+        const currentRect = drawRect(svg, x, y, listItemWidth, listItemHeight, transformTextRect(entry['value']).toString())
         addCircleClickEvent(canvas, currentRect[0], drawFromJSON(entry["value"], 0, document, [])[0], document, depth + 1)
         addCircleHoverEvent(currentRect[0])
 
