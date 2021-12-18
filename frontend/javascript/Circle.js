@@ -69,7 +69,7 @@ const drawArrowBetweenCanvases = (canvas, circle, firstLine) => {
     const x2 = (firstLine[0] + firstLine[2]) / 2
     const y2 = (firstLine[1] + firstLine[3]) / 2 + INITIAL_CX + radius * 2 + ERROR
 
-    currentArrow = drawArrow(canvas, cx, (parseInt(cy) + radius).toString(), x2.toString(), y2.toString())
+    currentArrow = drawArrow(canvas, cx, (parseInt(cy) + radius).toString(), x2.toString(), y2.toString(), "")
 }
 
 const drawCircle = (svg, prev, value, visualizer, document) => {

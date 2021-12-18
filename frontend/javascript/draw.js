@@ -38,19 +38,25 @@ const drawNode = (value, location, isLast) => {
 const drawFromJSON = (requestedJSON, id, document, soup) => {
     let hasChildren;
     const keys = Object.keys(requestedJSON);
-    soup.visualizers.push({
+    const visualizer = {
         'id': id,
         'dictionary': {},
         'list': {},
-        'atom': ''
-    })
+        'atom': '',
+        "children": []
+    }
+    soup.visualizers.push(visualizer)
     for (const key of keys) {
         if (key !== 'type') {
             if (requestedJSON[key]['type'] === 'visualizer') {
                 hasChildren = drawFromJSON(requestedJSON[key]['value'], id + 1, document, soup)
+                visualizer["children"].push({
+                    tag: key,
+                    id: id + 1  // TODO: more nodes support
+                })
             } else {
                 const type = requestedJSON[key]['type']
-                const visualizer = soup.visualizers.filter(x => x['id'] === id)[0]
+                //const visualizer = soup.visualizers.filter(x => x['id'] === id)[0]
                 if (type !== undefined) {
                     if (requestedJSON[key]['type'] === 'atom') {
                         visualizer[type] += key + ": " + requestedJSON[key]['value'] + '\n'
@@ -89,11 +95,16 @@ const drawFromAtoms = (canvas, document, soup) => {
         nextCircle = circle.drawCircle(svg, currentPrev, x['atom'], x, document)
         elements.push(nextCircle)
         if (currentPrev !== undefined && nextCircle[0] !== undefined) {
-            linkers.drawArrow(svg, currentPrev.getAttribute('cx'),
+            linkers.drawArrow(svg, 
+                (parseInt(currentPrev.getAttribute('cx')) + parseInt(currentPrev.getAttribute("r"))).toString(),
+                //(parseInt(currentPrev.getAttribute('cy')) + circle.radius).toString(),
                 currentPrev.getAttribute('cy'),
-                nextCircle[0].getAttribute('cx'),
+                (parseInt(nextCircle[0].getAttribute('cx')) - parseInt(nextCircle[0].getAttribute("r"))).toString(),
+                //(parseInt(nextCircle[0].getAttribute('cy')) + circle.radius).toString(),
                 nextCircle[0].getAttribute('cy'),
-                document);
+                document,
+                //x["children"].length > 0 ? x["children"][0]["tag"] : "");  // TODO: more nodes support
+                soup.visualizers[index - 1]["children"][0]["tag"]);  // TODO: more nodes support
         }
     })
 

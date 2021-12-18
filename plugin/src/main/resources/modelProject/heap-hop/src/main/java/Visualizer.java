@@ -67,7 +67,7 @@ public interface Visualizer {
             return jsonObject;
         } else {
             jsonObject.put("type", "atom");
-            jsonObject.put("value", value);
+            jsonObject.put("value", value.toString());
         }
         return jsonObject;
     }

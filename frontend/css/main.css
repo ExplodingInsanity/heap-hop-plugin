@@ -130,6 +130,20 @@ body {
     color: white;
 }
 
-.rect {
+/* .rect {
     fill: #2a9d8f
+} */
+
+.fieldContainer:not(*:first-child) {
+    border-color: black;
+    border-style: solid none none none;
+    border-width: 1px;
+}
+
+.fieldContainer:last-child {
+    margin: 0 0 20px 0;
+}
+
+.fieldContainer {
+    padding: 3;
 }
