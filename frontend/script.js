@@ -155,13 +155,18 @@ const openModal = (element, modal, modalBody, canvas, visualizer, depth) => {
         for (let el of text.split("\n")) {
             let container = document.createElement("div")
             container.className = "fieldContainer"
-            container.addEventListener("click", (e) => {
-                //console.log(info[key])
-                let objName = el.split(":")[0].trim()   // TODO: find a way to not use split
-                //console.log(JSON.stringify({[key]: info[key][objName]}))
-                drawOtherStructures({[key]: info[key][objName]}, element, canvas, depth, objName)
-            })
             container.innerText = el
+            if(['dictionary','list'].includes(el.split(":")[1].trim())) {
+                let expandBtn = document.createElement("a")
+                expandBtn.href = "javascript:void(0)"
+                expandBtn.innerText = "+Expand"
+                expandBtn.style="padding-left:5px"
+                expandBtn.addEventListener("click", (e) => {
+                    let objName = el.split(":")[0].trim()   // TODO: find a way to not use split
+                    drawOtherStructures({[key]: info[key][objName]}, element, canvas, depth, objName)
+                })
+                container.append(expandBtn)
+            }
             modalBody.append(container)
         }
     }
