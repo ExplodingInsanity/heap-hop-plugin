@@ -9,10 +9,20 @@ public interface Visualizer {
         return encodeVisualizer(this);
     }
 
+    HashSet<VisualizerEdge> visitedEdges = new HashSet<>();
+    HashSet<Integer> visitedVisualizers = new HashSet<>();
+
     default JSONObject encodeVisualizer(Visualizer visualizerObject) {
         JSONObject fieldsJson = new JSONObject();
         fieldsJson.put("type", "visualizer");
         if (visualizerObject == null) return fieldsJson;
+        int selfHashcode = visualizerObject.hashCode();
+        fieldsJson.put("id",selfHashcode);
+        fieldsJson.put("duplicate",visitedVisualizers.contains(selfHashcode));
+//        System.out.println("duplicate:"+fieldsJson.get("duplicate"));
+//        System.out.println("id:"+fieldsJson.get("id"));
+//        System.out.println();
+        visitedVisualizers.add(selfHashcode);
         for (var field : visualizerObject.getClass().getDeclaredFields()) {
             boolean wasAccessible = field.canAccess(visualizerObject);
             field.setAccessible(true);
@@ -21,6 +31,14 @@ public interface Visualizer {
             try {
                 value = field.get(visualizerObject);
                 fieldName = field.getName();
+                // daca e visualizer verificam pt legaturi circulare
+                if(value != null && Visualizer.class.isAssignableFrom(value.getClass())){
+                    VisualizerEdge edge = new VisualizerEdge(visualizerObject,(Visualizer) value, fieldName);
+                    if(visitedEdges.contains(edge)) {
+                        continue;
+                    }
+                    visitedEdges.add(edge);
+                }
                 fieldsJson.put(fieldName, encodeField(value));
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -29,7 +47,6 @@ public interface Visualizer {
         }
         return fieldsJson;
     }
-
     default JSONObject encodeField(Object value) {
         JSONObject jsonObject = new JSONObject();
         if (value == null) return jsonObject;
@@ -67,7 +84,7 @@ public interface Visualizer {
             return jsonObject;
         } else {
             jsonObject.put("type", "atom");
-            jsonObject.put("value", value.toString());
+            jsonObject.put("value", value);
         }
         return jsonObject;
     }
