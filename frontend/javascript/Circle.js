@@ -78,7 +78,8 @@ const drawCircle = (svg, prev, value, visualizer, soup) => {
     const circle = soup.document.createElementNS(svgNS, 'circle');
     const text = soup.document.createElementNS(svgNS, 'text')
 
-    const tspanPosition = value.split('\n').length - 2
+    const splittedValue = value.split('\n')
+    const tspanPosition =  splittedValue.length > 3 ? 2 : splittedValue.length - 1
 
     let nextCX, nextCY;
 
@@ -122,12 +123,12 @@ const drawCircle = (svg, prev, value, visualizer, soup) => {
     //addCircleClickEvent(svg, circle, visualizer, document)
 
     let tspan, index = 1
-    for (const val of value.split('\n')) {
-        if (index === 3) break;
+    for (const val of splittedValue) {
+        if (index === 4) break;
         tspan = soup.document.createElementNS(svgNS, 'tspan');
         tspan.setAttribute('x', text.getAttribute('x'))
         tspan.setAttribute('dy', '15')
-        tspan.innerHTML = val.length > 10 ? `${val.split(":")[0].substring(0, 10)}...` : val
+        tspan.innerHTML = val.length > 13 ? `${val.split(":")[0].substring(0, 10)}...` : val
         text.appendChild(tspan)
         index += 1
     }

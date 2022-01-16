@@ -18,22 +18,22 @@ const drawDictionary = (svg, dictionaryArray, circle, canvas, depth) => {
 
     dictionaryArray.forEach(entry => {
         // create key node
-        currentKeyRect = drawRect(svg, x, y, width, height, `key: ${transformTextRect(entry['key']['value'])}`)
+        currentKeyRect = drawRect(svg, x, y, width, height, `${transformTextRect(entry['key']['value'])}`)
         // create value node
-        currentValueRect = drawRect(svg, x + KEY_VALUE_DISTANCE, y, width, height, `value: ${transformTextRect(entry['value']['value'])}`)
+        currentValueRect = drawRect(svg, x + KEY_VALUE_DISTANCE, y, width, height, `${transformTextRect(entry['value']['value'])}`)
         // currentValueRect[0].addEventListener("click", (e) => {
         //     drawOtherStructures(entry["value"]["value"], this, canvas, depth + 1)
         // })
         // addCircleClickEvent(canvas, currentKeyRect[0], drawFromJSON(entry["key"]["value"], 0, document, [entry["key"]])[0], document, depth + 1)
         if (entry["key"]["type"] === "atom") {
-            addCircleClickEvent(canvas, currentKeyRect[0], drawFromJSON({"key": {"type": "atom", "value": entry["key"]["value"]}}, 0, document, [])[0], document, depth + 1)    
+            addCircleClickEvent(canvas, currentKeyRect[0], drawFromJSON({"key": {"type": "atom", "value": entry["key"]["value"]}}, 0, document, [])[0], document, depth + 1)
         }
         else addCircleClickEvent(canvas, currentKeyRect[0], drawFromJSON(entry["key"]["value"], 0, document, [])[0], document, depth + 1)
         addCircleHoverEvent(currentKeyRect[0])
 
         // addCircleClickEvent(canvas, currentValueRect[0], drawFromJSON(entry["value"]["value"], 0, document, [entry["value"]])[0], document, depth + 1)
         if (entry["value"]["type"] === "atom") {
-            addCircleClickEvent(canvas, currentValueRect[0], drawFromJSON({"value": {"type": "atom", "value": entry["value"]["value"]}}, 0, document, [])[0], document, depth + 1)    
+            addCircleClickEvent(canvas, currentValueRect[0], drawFromJSON({"value": {"type": "atom", "value": entry["value"]["value"]}}, 0, document, [])[0], document, depth + 1)
         }
         else addCircleClickEvent(canvas, currentValueRect[0], drawFromJSON(entry["value"]["value"], 0, document, [])[0], document, depth + 1)
         addCircleHoverEvent(currentValueRect[0])
