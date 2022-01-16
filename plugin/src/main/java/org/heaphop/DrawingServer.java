@@ -36,7 +36,7 @@ public class DrawingServer {
                 throw new ConnectException("The server is already started!");
             }
             if (process == null || !process.isAlive()) {
-                process = Runtime.getRuntime().exec(String.format("cmd /c node %s", pathToServer));
+                process = Runtime.getRuntime().exec(new String[]{"cmd", "/c", "node", pathToServer});
 //                process = Runtime.getRuntime().exec(String.format("cmd /c cat %s", pathToServer));
             }
 
@@ -52,6 +52,7 @@ public class DrawingServer {
                             throw new ConnectException("The server is already started by another process!");
                         }
                         else {
+                            System.out.println(result);
                             throw new ConnectException("Couldn't start the server!");
                         }
                     }
