@@ -119,6 +119,9 @@ body {
     fill: #2a9d8f;
     stroke: rgb(0, 0, 0);
     stroke-width: 2;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: dash 5s linear forwards;
 }
 
 .valueText {
@@ -130,10 +133,12 @@ body {
     color: white;
 }
 
-/* .rect {
-    fill: #2a9d8f
-} */
-
+.rect {
+    animation: rectangle 1s linear forwards;
+} 
+.rectangleText {
+    animation: textRectangle 1.523516s linear forwards;
+}
 .fieldContainer:not(*:first-child) {
     border-color: black;
     border-style: solid none none none;
@@ -146,4 +151,36 @@ body {
 
 .fieldContainer {
     padding: 3;
+}
+
+@keyframes dash {
+    to{
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes textRectangle{
+0%{
+    opacity: 0;
+}
+80%{
+opacity:0.4;
+
+}
+
+100%{
+    opacity: 1;
+}
+}
+
+@keyframes rectangle{
+    from{
+        height:0px;
+        width:0px;
+    }
+    to{
+        height:80px;
+        width:80px;
+    }
+
 }

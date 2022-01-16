@@ -20,6 +20,7 @@ const drawRect = (svg, x, y, width, height, value) => {
         tspan = document.createElementNS(svgNS, 'tspan');
         tspan.setAttribute('x', text.getAttribute('x'))
         tspan.setAttribute('dy', '15')
+        tspan.setAttribute("class", "rectangleText")
 
         let key = val.split(":")[0], newValue = ''
         if (val.length > 7 && key !== '[visualizer]') {
