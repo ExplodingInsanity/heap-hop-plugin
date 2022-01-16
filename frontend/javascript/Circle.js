@@ -72,10 +72,11 @@ const drawArrowBetweenCanvases = (canvas, circle, firstLine) => {
     currentArrow = drawArrow(canvas, cx, (parseInt(cy) + radius).toString(), x2.toString(), y2.toString(), "")
 }
 
-const drawCircle = (svg, prev, value, visualizer, document) => {
+
+const drawCircle = (svg, prev, value, visualizer, soup) => {
     const svgNS = svg.namespaceURI;
-    const circle = document.createElementNS(svgNS, 'circle');
-    const text = document.createElementNS(svgNS, 'text')
+    const circle = soup.document.createElementNS(svgNS, 'circle');
+    const text = soup.document.createElementNS(svgNS, 'text')
 
     const tspanPosition = value.split('\n').length - 2
 
@@ -92,7 +93,13 @@ const drawCircle = (svg, prev, value, visualizer, document) => {
         text.setAttribute('y', (INITIAL_CY - 13 * tspanPosition).toString())
     } else {
         nextCX = parseInt(prev.getAttribute("cx")) + INITIAL_CX
-        nextCY = parseInt(prev.getAttribute("cy"))
+        if (soup.yLevels[nextCX] === undefined) {
+            nextCY = parseInt(prev.getAttribute("cy"))
+        }
+        else {
+            nextCY = Math.max(parseInt(prev.getAttribute("cy")), soup.yLevels[nextCX] * INITIAL_CY + INITIAL_CY);
+        }
+        soup.yLevels[nextCX] = nextCY / INITIAL_CY;
         circle.setAttribute('cx', nextCX.toString())
         circle.setAttribute('cy', nextCY.toString())
         text.setAttribute('x', nextCX.toString())
@@ -114,13 +121,15 @@ const drawCircle = (svg, prev, value, visualizer, document) => {
     //addCircleHoverEvent(circle)
     //addCircleClickEvent(svg, circle, visualizer, document)
 
-    let tspan
+    let tspan, index = 1
     for (const val of value.split('\n')) {
-        tspan = document.createElementNS(svgNS, 'tspan');
+        if (index === 3) break;
+        tspan = soup.document.createElementNS(svgNS, 'tspan');
         tspan.setAttribute('x', text.getAttribute('x'))
         tspan.setAttribute('dy', '15')
-        tspan.innerHTML = val
+        tspan.innerHTML = val.length > 10 ? `${val.split(":")[0].substring(0, 10)}...` : val
         text.appendChild(tspan)
+        index += 1
     }
 
     // svg.appendChild(circle);

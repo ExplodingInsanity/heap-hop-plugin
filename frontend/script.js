@@ -101,7 +101,7 @@ const drawOtherStructures = (visualizer, circle, canvas, depth, tag) => {
                     `${canvasX1} ${canvasY1} ${maxX2.toString()} ${maxY2.toString()}`)
             }
 
-            drawArrowBetweenCanvases(canvas, circle, firstLine[0], tag)
+            drawArrowBetweenCanvases(canvas, circle, firstLine[0], tag, svg)
         }
         if (drawable[0] === 'list' && Object.keys(drawable[1]).length !== 0) {
             firstLine = drawList(svg, drawable[1], circle, canvas, depth);
@@ -116,7 +116,7 @@ const drawOtherStructures = (visualizer, circle, canvas, depth, tag) => {
                     `${canvasX1} ${canvasY1} ${maxX2.toString()} ${maxY2.toString()}`)
             }
             
-            drawArrowBetweenCanvases(canvas, circle, firstLine[0], tag)
+            drawArrowBetweenCanvases(canvas, circle, firstLine[0], tag, svg)
         }
     }
 }
@@ -144,11 +144,11 @@ const getTextForKey = (key, info) => {
 
 const openModal = (element, modal, modalBody, canvas, visualizer, depth) => {
     if (modal == null) return;
-    const info = visualizer
+    const info = Object.keys(visualizer).includes("type") && visualizer["type"] === "atom" ? {"atom": `atom: ${visualizer["value"]}`} : visualizer;
+    // const info = visualizer;
     modalBody.innerHTML = ''
     for (let key in info) {
         let text = getTextForKey(key, info).trim()
-        //console.log("text " + text)
         if (text.trim() === "") {
             continue
         }
@@ -174,6 +174,7 @@ const openModal = (element, modal, modalBody, canvas, visualizer, depth) => {
 }
 
 const drawFromJSON = (requestedJSON, id, document, visualizers) => {
+    // console.log(requestedJSON);
     //console.log("in draw from JSON")
     //console.log(JSON.stringify(requestedJSON))
     const keys = Object.keys(requestedJSON);
@@ -214,7 +215,6 @@ const addCircleClickEvent = (canvas, circle, visualizer, document, depth) => {
         if (previousSelectedCircle != null) {
             previousSelectedCircle.setAttribute("fill", normalCircleColor[previousSelectedCircle.getAttribute('class')]);
         }
-        //console.log(JSON.stringify(visualizer))
         previousSelectedCircle = circle;
         circle.setAttribute("fill", selectedCircleColor)
         const modal = document.getElementById('modal');
@@ -223,7 +223,8 @@ const addCircleClickEvent = (canvas, circle, visualizer, document, depth) => {
     })
 }
 
-const drawArrowBetweenCanvases = (canvas, circle, firstLine, tag) => {
+const drawArrowBetweenCanvases = (canvas, circle, firstLine, tag, smallCanvas) => {
+    let canvasY = parseInt(smallCanvas.getAttribute("y"));
     let offsetY = 0
     if (canvasStack.length >= 2) {
         offsetY = canvasStack[canvasStack.length - 2]["y"]
@@ -241,7 +242,7 @@ const drawArrowBetweenCanvases = (canvas, circle, firstLine, tag) => {
     }
 
     const x2 = (firstLine[0] + firstLine[2]) / 2
-    let y2 = (firstLine[1] + firstLine[3]) / 2 + INITIAL_CX * canvasStack.length + radius * 2 + ERROR
+    let y2 = (firstLine[1] + firstLine[3]) / 2 + INITIAL_CX * (canvasStack.length - 1) + canvasY;
 
     if (canvasStack.length >= 2) {
        y2 = (firstLine[1] + firstLine[3]) / 2 + canvasStack[canvasStack.length - 2]["y"] + INITIAL_CY + canvasStack[canvasStack.length - 2]["maxInnerY"]
@@ -253,6 +254,7 @@ const drawArrow = (svg, x1, y1, x2, y2, tag) => {
     const svgNS = svg.namespaceURI;
     const line = document.createElementNS(svgNS, 'line');
     const textOffsetX = 10
+    const textOffsetY = 15;
     line.setAttribute('x1', x1)
     line.setAttribute('y1', y1)
     line.setAttribute('x2', x2)
@@ -263,8 +265,12 @@ const drawArrow = (svg, x1, y1, x2, y2, tag) => {
     if (tag !== "") {
         const text = document.createElementNS(svgNS, 'text')
         text.setAttribute("x", ((parseInt(x1) + parseInt(x2)) / 2 + textOffsetX).toString())
-        text.setAttribute("y", ((parseInt(y1) + parseInt(y2)) / 2).toString())
-
+        if (y1 !== y2) {
+            text.setAttribute("y", (parseInt(y1) + textOffsetY).toString());
+        }
+        else {
+            text.setAttribute("y", ((parseInt(y1) + parseInt(y2)) / 2).toString())
+        }
         const tspan = document.createElementNS(svgNS, 'tspan')
         tspan.innerHTML = tag
         text.appendChild(tspan);

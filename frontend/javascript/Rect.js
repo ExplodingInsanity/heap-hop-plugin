@@ -14,13 +14,21 @@ const drawRect = (svg, x, y, width, height, value) => {
     text.setAttribute('y', (y + height / 2).toString())
     text.setAttribute('class', 'valueText')
 
-    let tspan
+    let tspan, index = 1
     for (const val of value.split('\n')) {
+        if (index === 3) break;
         tspan = document.createElementNS(svgNS, 'tspan');
         tspan.setAttribute('x', text.getAttribute('x'))
         tspan.setAttribute('dy', '15')
-        tspan.innerHTML = val
+
+        let key = val.split(":")[0], newValue = ''
+        if (val.length > 7 && key !== '[visualizer]') {
+            newValue = `${key.substring(0, 7)}...`
+        }
+        tspan.innerHTML = newValue !== '' ? newValue : val
+        // tspan.innerHTML = val;
         text.appendChild(tspan)
+        index += 1;
     }
 
     return [rect, text]

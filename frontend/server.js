@@ -7,6 +7,8 @@ const app = express();
 const cors = require("cors");
 const draw = require("./javascript/draw.js")
 const HtmlFileSoup = require("./htmlFileSoup.js")
+var bodyParser = require('body-parser');
+
 
 let requestedJSON = {};
 
@@ -62,11 +64,11 @@ const copyDir = (src, dest) => {
 };
 
 const createHtmlFile = (requestedJSON) => {
-    // console.log(JSON.stringify(requestedJSON))
+    //console.log(JSON.stringify(requestedJSON))
     const OUT_PATH = path.join(__dirname, "index.html"); // would be nice to get from command line
     let htmlModel = fs.readFileSync(path.join(__dirname, "models/index.html"))
     let soup = new HtmlFileSoup(htmlModel)
-    draw.drawFromJSON(requestedJSON, 0, soup.document, soup);
+    draw.drawFromJSON(requestedJSON, soup.document, soup, 0);
     let canvas = soup.document.getElementById('canvas');
     draw.drawFromAtoms(canvas, soup.document, soup);
     fs.writeFileSync(OUT_PATH, soup.document.getElementsByTagName('html')[0].outerHTML)
@@ -78,6 +80,8 @@ const appPrefix = 'heap-hop';
 
 
 //app.use(cors(corsOptions)) // Use this after the variable declaration
+
+app.use(bodyParser.json({ limit: '50mb' }));
 
 app.use(
     cors({

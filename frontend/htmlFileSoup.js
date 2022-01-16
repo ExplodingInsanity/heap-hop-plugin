@@ -40,7 +40,8 @@ class HtmlFileSoup {
         this.dom = new JSDOM(soup);
         this.window = this.dom.window;
         this.document = this.window.document;
-        this.visualizers = []
+        this.visualizers = {};
+        this.yLevels = {};
     }
 }
 
