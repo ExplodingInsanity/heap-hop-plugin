@@ -105,18 +105,28 @@ const drawCircle = (svg, prev, value, visualizer, soup) => {
         text.setAttribute('x', nextCX.toString())
         text.setAttribute('y', (nextCY - 13 * tspanPosition).toString())
     }
-    svg.setAttribute('viewBox', `0 0 ${nextCX + radius + ERROR} ${nextCY + radius + ERROR}`)
     circle.setAttribute('r', radius.toString());
     circle.setAttribute('class', 'circle')
     circle.setAttribute('fill', '#bc4749')
 
     text.setAttribute('class', 'valueText')
     // keeping the initial values of canvas view box
-    const values = svg.getAttribute('viewBox').split(' ')
-    canvasX1 = parseInt(values[0])
-    canvasY1 = parseInt(values[1])
-    canvasX2 = parseInt(values[2])
-    canvasY2 = parseInt(values[3])
+    if (svg.getAttribute("viewBox") === null) {
+        canvasX1 = 0
+        canvasX2 = 0;
+        canvasY1 = 0;
+        canvasY2 = 0;
+    }
+    else {
+        const values = svg.getAttribute('viewBox').split(' ')
+        canvasX1 = parseInt(values[0])
+        canvasY1 = parseInt(values[1])
+        canvasX2 = parseInt(values[2])
+        canvasY2 = parseInt(values[3])
+    }
+
+    svg.setAttribute('viewBox', `0 0 ${Math.max(canvasX2, nextCX + radius + ERROR)} ${Math.max(canvasY2, nextCY + radius + ERROR)}`)
+
 
     //addCircleHoverEvent(circle)
     //addCircleClickEvent(svg, circle, visualizer, document)
@@ -132,7 +142,6 @@ const drawCircle = (svg, prev, value, visualizer, soup) => {
         index += 1
     }
 
-    // svg.appendChild(circle);
     return [circle, text];
 }
 
