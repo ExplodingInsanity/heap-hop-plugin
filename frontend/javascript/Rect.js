@@ -16,14 +16,14 @@ const drawRect = (svg, x, y, width, height, value) => {
 
     let tspan, index = 1
     for (const val of value.split('\n')) {
-        if (index === 3) break;
+        if (index === 4) break;
         tspan = document.createElementNS(svgNS, 'tspan');
         tspan.setAttribute('x', text.getAttribute('x'))
         tspan.setAttribute('dy', '15')
         tspan.setAttribute("class", "rectangleText")
 
         let key = val.split(":")[0], newValue = ''
-        if (val.length > 7 && key !== '[visualizer]') {
+        if (val.length > 10 && key !== '[visualizer]') {
             newValue = `${key.substring(0, 7)}...`
         }
         tspan.innerHTML = newValue !== '' ? newValue : val
